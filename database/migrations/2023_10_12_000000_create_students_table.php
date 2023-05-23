@@ -13,21 +13,24 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            //$table->foreignId('grade_id')->nullable();
-            //$table->foreignId('section_id')->nullable();
+            $table->foreignId('grade_id')->constrained()->nullable();
+            $table->foreignId('section_id')->constrained()->nullable();
+
             $table->string('username')->unique();
             $table->string('password');
-            //$table->string('address');
-            //$table->string('phone_number');
-            // $table->string('first_name');
-            // $table->string('middle_name');
-            // $table->string('last_name');
-            // $table->date('date_of_birth');
-            // $table->text('bio')->default('Your hobbies and the things you like the most!');
-            // $table->enum('type',['scientific','literary','basic']);
-            // $table->enum('gender',['male','female']);
-            // $table->string('image_url')->nullable();
-            // $table->rememberToken();
+
+            $table->string('first_name');
+            $table->string('middle_name');
+            $table->string('last_name');
+            $table->date('date_of_birth');
+            $table->string('address');
+            $table->string('phone_number');
+            $table->text('bio');
+            $table->string('image_url')->nullable();
+            $table->enum('gender',['male','female']);
+            $table->enum('type',['scientific','literary','basic']);
+
+            $table->rememberToken();
             $table->timestamps();
         });
     }
