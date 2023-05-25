@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('totals', function (Blueprint $table) {
+        Schema::create('section_teachers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students');
+            $table->foreignId('teacher_id')->constrained('teachers');
+            $table->foreignId('section_id')->constrained('sections');
             $table->foreignId('grade_course_id')->constrained('grade_courses');
 
-            $table->year('year');
-            $table->integer('first_term_score');
-            $table->integer('second_term_score');
-            $table->integer('final_score');
-            $table->boolean('has_failed');
-
+            $table->unique(['section_id','grade_course_id']);
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('totals');
+        Schema::dropIfExists('section_teachers');
     }
 };

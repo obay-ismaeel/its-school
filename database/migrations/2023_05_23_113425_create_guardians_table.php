@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('guardians', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained();
 
             $table->string('username')->unique();
             $table->string('password');

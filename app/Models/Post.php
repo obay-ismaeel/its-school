@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Console\View\Components\Alert;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Alerts extends Model
+class Post extends Model
 {
     use HasFactory;
 
@@ -15,13 +14,13 @@ class Alerts extends Model
         return $this->belongsTo(Teacher::class, 'teacher_id');
     }
 
-    public function student()
+    public function grade()
     {
-        return $this->belongsTo(Student::class, 'student_id');
+        return $this->belongsTo(Grade::class, 'grade_id');
     }
 
-    public function alerts()
+    public function attachments()
     {
-        return $this->hasMany(Alert::class, 'teacher_id');
+        return $this->hasMany(Attachment::class, 'post_id');
     }
 }

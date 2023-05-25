@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grade_courses', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('grade_id')->constrained();
-            $table->foreignId('course_id')->constrained();
-            $table->text('description');
-            $table->unique(['grade_id', 'course_id']);
+            $table->foreignId('post_id')->constrained('posts');
+
+            $table->string('file_url');
+            $table->enum('type',['image','video','pdf']);
+
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grade_courses');
+        Schema::dropIfExists('attachments');
     }
 };

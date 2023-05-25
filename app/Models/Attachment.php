@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StudentAttendance extends Model
+class Attachment extends Model
 {
     use HasFactory;
 
-    public function student()
+    public function post()
     {
-        return $this->belongsTo(Student::class, 'student_id');
+        return $this->belongsTo(Post::class, 'post_id');
     }
 }

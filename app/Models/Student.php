@@ -31,4 +31,49 @@ class Student extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class, 'grade_id');
+    }
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class, 'section_id');
+    }
+
+    public function guardians()
+    {
+        return $this->belongsToMany(Student::class,'guardian_students');
+    }
+
+    public function attendance()
+    {
+        return $this->hasMany(StudentAttendance::class, 'student_id');
+    }
+
+    public function marks()
+    {
+        return $this->hasMany(Mark::class, 'student_id');
+    }
+
+    public function totals()
+    {
+        return $this->hasMany(Total::class, 'student_id');
+    }
+
+    public function alerts()
+    {
+        return $this->hasMany(Alert::class, 'student_id');
+    }
+
+    public function guardiansReports()
+    {
+        return $this->hasMany(Report::class, 'guardian_id');
+    }
+
+    public function assignments()
+    {
+        return $this->belongsToMany(Assignment::class, 'assignment_students');
+    }
 }

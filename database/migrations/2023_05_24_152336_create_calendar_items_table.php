@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grade_courses', function (Blueprint $table) {
+        Schema::create('calendar_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('grade_id')->constrained();
-            $table->foreignId('course_id')->constrained();
-            $table->text('description');
-            $table->unique(['grade_id', 'course_id']);
+
+            $table->dateTime('date');
+
+            $table->string('title');
+            $table->text('content');
+            $table->enum('type',['meeting','holiday','event']);
+
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grade_courses');
+        Schema::dropIfExists('calendar_items');
     }
 };

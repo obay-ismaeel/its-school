@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Total extends Model
+class SectionSchedule extends Model
 {
     use HasFactory;
 
-    public function student()
+    public function section()
     {
-        return $this->belongsTo(Student::class, 'student_id');
+        return $this->belongsTo(Section::class, 'section_id');
     }
 
     public function gradeCourse()
