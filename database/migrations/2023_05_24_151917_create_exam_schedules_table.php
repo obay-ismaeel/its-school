@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('exam_schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('grade_id')->constrained();
             $table->foreignId('grade_course_id')->constrained();
 
             $table->dateTime('start_at');

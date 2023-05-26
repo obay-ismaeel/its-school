@@ -9,11 +9,6 @@ class ExamSchedule extends Model
 {
     use HasFactory;
 
-    public function grade()
-    {
-        return $this->belongsTo(Grade::class, 'grade_id');
-    }
-
     public function gradeCourse()
     {
         return $this->belongsTo(GradeCourse::class, 'grade_course_id');

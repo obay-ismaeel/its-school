@@ -34,4 +34,9 @@ class Grade extends Model
     {
         return $this->hasMany(ExamSchedule::class, 'grade_id');
     }
+
+    public function examSchedules()
+    {
+        return $this->hasManyThrough(ExamSchedule::class ,GradeCourse::class, 'grade_id', 'grade_course_id');
+    }
 }
