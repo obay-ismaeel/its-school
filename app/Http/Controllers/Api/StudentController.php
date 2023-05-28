@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Student;
 
-class AdminController extends Controller
+class StudentController extends Controller
 {
     public function login(Request $request)
     {
@@ -17,9 +17,9 @@ class AdminController extends Controller
             'password' => 'required',
         ]);
 
-        $admin = Admin::firstwhere('username', $request -> username);
+        $student = Student::firstwhere('username', $request -> username);
 
-        if(! $admin || ! Hash::check($request -> password, $admin -> password))
+        if(! $student || ! Hash::check($request -> password, $student -> password))
         {
             return response() -> json([
                 'status' => false,
@@ -30,7 +30,7 @@ class AdminController extends Controller
         return response() -> json([
             'status' => true,
             'message' => 'login success',
-            'token' => $admin -> createToken('authToken', ['admin']) -> plainTextToken
+            'token' => $student -> createToken('authToken', ['student']) -> plainTextToken
         ]);
     }
 

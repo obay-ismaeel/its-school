@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,3 +14,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('teachers/login', [TeacherController::class, 'login']);
+Route::get('teachers/profile', [TeacherController::class, 'profile'])
+        ->middleware(['auth:sanctum', 'abilities:teacher']);
