@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained()->nullable();
+            $table->foreignId('course_id')->nullable()->constrained();
 
             $table->string('username')->unique();
             $table->string('password');
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('image_url');
             $table->text('bio');
             $table->date('date_of_birth');
+            $table->boolean('is_principle')->default(false);
             $table->enum('gender', ['male','female']);
 
             $table->timestamps();
