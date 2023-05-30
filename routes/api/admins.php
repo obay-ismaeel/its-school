@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('admins/login', [AdminController::class, 'login']);
-Route::get('admins/details', [AdminController::class, 'details'])
+Route::get('admins/profile', [AdminController::class, 'profile'])
         ->middleware(['auth:sanctum', 'abilities:admin']);

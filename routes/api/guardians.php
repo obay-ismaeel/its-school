@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\GuardianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,3 +14,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('guardians/login', [GuardianController::class, 'login']);
+Route::get('guardians/profile', [GuardianController::class, 'profile'])
+        ->middleware(['auth:sanctum', 'abilities:guardian']);
