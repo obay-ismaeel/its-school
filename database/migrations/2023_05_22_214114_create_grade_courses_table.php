@@ -16,7 +16,10 @@ return new class extends Migration
             $table->foreignId('grade_id')->constrained();
             $table->foreignId('course_id')->constrained();
             $table->text('description');
-            $table->unique(['grade_id', 'course_id']);
+
+            //$table->unique(['grade_id', 'course_id']);
+            //factories problem
+
             $table->timestamps();
         });
     }

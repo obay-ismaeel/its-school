@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('grade_id');
             $table->tinyInteger('number');
             $table->string('name');
-            $table->unique(['grade_id','number']);
+            //$table->unique(['grade_id','number']);
             $table->timestamps();
         });
     }

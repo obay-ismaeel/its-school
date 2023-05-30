@@ -19,6 +19,7 @@ class AdminController extends Controller
 
         $admin = Admin::firstwhere('username', $request -> username);
 
+
         if(! $admin || ! Hash::check($request -> password, $admin -> password))
         {
             return response() -> json([

@@ -17,7 +17,15 @@ class GuardianFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'username' => fake()->unique()->userName(),
+            'password' => fake()->password(),
+
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'phone_number' => fake()->phoneNumber(),
+            'job' => fake()->jobTitle(),
+            'address' => fake()->address(),
+            'gender' => fake()->randomElement(['male','female'])
         ];
     }
 }

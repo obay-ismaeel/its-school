@@ -5,6 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
+use App\Models\Course;
+use App\Models\Grade;
+use App\Models\GradeCourse;
+use App\Models\Section;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,22 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        Grade::factory(10)->create();
+        Course::factory(20)->create();
+        GradeCourse::factory(20)->create();
+        Section::factory(20)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-            Admin::factory() -> create([
-                'username' => 'majdham',
-                'password' => bcrypt(123456),
-                'first_name' => 'majd',
-                'last_name' => 'hammad',
-                'phone_number' => '0997311959',
-                'address' => 'Damascus',
-                'gender' => 'male',
-
-            ]);
+        Admin::factory(5)->create();
     }
 }

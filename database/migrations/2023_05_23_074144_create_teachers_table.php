@@ -26,6 +26,8 @@ return new class extends Migration
             $table->text('bio');
             $table->date('date_of_birth');
             $table->enum('gender', ['male','female']);
+            $table->boolean('is_principle')->default(false);
+
 
             $table->timestamps();
         });

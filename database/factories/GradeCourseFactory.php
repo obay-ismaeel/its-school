@@ -17,7 +17,9 @@ class GradeCourseFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'grade_id' => fake()->numberBetween(1,10),
+            'course_id' => fake()->numberBetween(1,20),
+            'description' => fake()->sentence()
         ];
     }
 }

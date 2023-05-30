@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('job');
             $table->string('email')->unique();
-            $table->boolean('is_principle')->default(false);
             $table->enum('gender', ['male', 'female']);
 
             $table->timestamps();

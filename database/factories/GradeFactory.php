@@ -17,7 +17,9 @@ class GradeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'number' => fake()->unique()->numberBetween(1,10),
+            'name' => fake()->word(),
+            'type' => fake()->randomElement(['scientific','literary', 'basic'])
         ];
     }
 }
