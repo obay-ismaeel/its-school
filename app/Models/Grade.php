@@ -9,6 +9,7 @@ use Tests\Feature\ExampleTest;
 class Grade extends Model
 {
     use HasFactory;
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function students()
     {

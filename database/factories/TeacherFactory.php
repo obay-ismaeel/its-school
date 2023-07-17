@@ -17,7 +17,18 @@ class TeacherFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'course_id' => fake()->numberBetween(1, 6),
+            'is_principle' => fake()->boolean(),
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'bio' => fake()->text(),
+            'phone_number' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'username' => fake()->unique()->userName(),
+            'password' => fake()->password(),
+            'image_url' => fake()->url(),
+            'gender' => fake()->randomElement(['male', 'female']),
+            'date_of_birth' => fake()->date()
         ];
     }
 }

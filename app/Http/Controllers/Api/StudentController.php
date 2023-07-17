@@ -38,7 +38,10 @@ class StudentController extends Controller
     {
         return response() -> json([
             'status' => true,
-            'message' => Auth::user()
+            'message' => 'Student profile',
+            'profile' => Auth::user(),
+            'section' => Student::find(Auth::id())->section,
+            'grade' => Student::find(Auth::id())->section->grade
         ]);
     }
 }

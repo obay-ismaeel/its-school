@@ -17,7 +17,11 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'teacher_id' => fake()->numberBetween(1, 6),
+            'grade_id' => fake()->numberBetween(1, 3),
+            'title' => fake()->word(),
+            'content' => fake()->text(),
+            'type' => fake()->randomElement(['educational', 'news'])
         ];
     }
 }

@@ -13,7 +13,7 @@ class Teacher extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $hidden = [
-        'password'
+        'password',
     ];
 
     public function course()

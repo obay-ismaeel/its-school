@@ -38,7 +38,7 @@ class GuardianController extends Controller
     {
         return response() -> json([
             'status' => true,
-            'message' => Auth::user()
+            'profile' => Auth::user()
         ]);
     }
 }

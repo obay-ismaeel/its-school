@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('teacher_id')->constrained('teachers');
             $table->foreignId('section_id')->constrained('sections');
-            $table->foreignId('grade_course_id')->constrained('grade_courses');
+            //!$table->foreignId('grade_course_id')->constrained('grade_courses');
 
-            $table->unique(['section_id','grade_course_id']);
+            $table->unique(['section_id','teacher_id']); // replace grade_course_id with teacher id here
             $table->timestamps();
         });
     }

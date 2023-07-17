@@ -17,7 +17,20 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'section_id' => fake()->numberBetween(1, 6),
+            //'grade_id' => fake()->numberBetween(1, 3),
+            'username' => fake()->unique()->userName(),
+            'password' => fake()->password(),
+            'first_name' => fake()->firstName(),
+            'middle_name' => fake()->name(),
+            'last_name' => fake()->lastName(),
+            'gender' => fake()->randomElement(['male', 'female']),
+            'address' => fake()->address(),
+            'phone_number' => fake()->phoneNumber(),
+            'bio' => fake()->text(),
+            'image_url' => fake()->url(),
+            'date_of_birth' => fake()->date(),
+            'type' => fake()->randomElement(['literary', 'scientific', 'basic'])
         ];
     }
 }

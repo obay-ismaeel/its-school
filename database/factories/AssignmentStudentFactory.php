@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Assignment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class AssignmentStudentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            //'student_id' => 2,
+            //'assignment_id' => Assignment::factory()->create()->id,
+            'is_done' => fake()->boolean()
         ];
     }
 }

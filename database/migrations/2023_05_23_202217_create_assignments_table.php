@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('section_id')->constrained();
             $table->foreignId('teacher_id')->constrained();
-            $table->foreignId('grade_course_id')->constrained();
+            $table->foreignId('grade_course_id')->nullable()->constrained();
 
             $table->string('title');
             $table->text('content');

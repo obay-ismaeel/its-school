@@ -17,7 +17,12 @@ class MarkFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'student_id' => fake()->numberBetween(1, 91),
+            'grade_course_id' => fake()->numberBetween(1, 18),
+            'type' => fake()->randomElement(['practical','exam','test']),
+            'score' => fake()->numberBetween(100, 200),
+            'term' => fake()->randomElement(['first', 'second']),
+            'year' => fake()->year()
         ];
     }
 }

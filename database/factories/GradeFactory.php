@@ -17,7 +17,7 @@ class GradeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'type' => fake()->randomElement(['literary', 'scientific'])
         ];
     }
 }

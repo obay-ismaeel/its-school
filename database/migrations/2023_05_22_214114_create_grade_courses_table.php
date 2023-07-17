@@ -16,6 +16,9 @@ return new class extends Migration
             $table->foreignId('grade_id')->constrained();
             $table->foreignId('course_id')->constrained();
             $table->text('description');
+            $table->integer('number of weekly classes');
+            $table->integer('top_mark');
+            $table->integer('lower_mark');
             $table->unique(['grade_id', 'course_id']);
             $table->timestamps();
         });
