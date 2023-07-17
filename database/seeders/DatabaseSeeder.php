@@ -19,6 +19,7 @@ use App\Models\Mark;
 use App\Models\Post;
 use App\Models\SectionSchedule;
 use App\Models\SectionTeacher;
+use App\Models\StudentAttendance;
 use App\Models\Total;
 
 class DatabaseSeeder extends Seeder
@@ -222,5 +223,8 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
 
+            // Students attendance
+            StudentAttendance::factory(30)->create();
+            StudentAttendance::factory(10)->create(['student_id' => 91]);
     }
 }

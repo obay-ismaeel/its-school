@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AssignmentController;
+use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\MarkController;
 use App\Http\Controllers\Api\PostController;
@@ -32,6 +33,7 @@ Route::middleware(['auth:sanctum', 'abilities:student'])
     Route::put('assignments', [AssignmentController::class, 'check']);
     Route::get('posts', [PostController::class, 'studentIndex']);
     Route::get('marks', [MarkController::class, 'studentIndex']);
-    Route::get('schedule', [SectionScheduleController::class , 'studentIndex']);
     Route::get('totals', [MarkController::class, 'total']);
+    Route::get('schedule', [SectionScheduleController::class , 'studentIndex']);
+    Route::get('attendances', [AttendanceController::class, 'attendanceDayCount']);
 });

@@ -17,7 +17,9 @@ class StudentAttendanceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'student_id' => fake()->numberBetween(1, 91),
+            'date' => fake()->date(),
+            'attended' => fake()->boolean()
         ];
     }
 }

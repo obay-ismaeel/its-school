@@ -19,7 +19,7 @@ class TotalFactory extends Factory
         return [
             'student_id' => fake()->numberBetween(1, 90),
             'grade_course_id' =>fake()->numberBetween(1, 18),
-            'year' => fake()->year(),
+            'year' => now()->year,
             'first_term_score' => fake()->numberBetween(120, 200),
             'second_term_score' => fake()->numberBetween(120, 200),
             'final_score' => fake()->numberBetween(120, 200),

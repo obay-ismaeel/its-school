@@ -22,7 +22,7 @@ class MarkFactory extends Factory
             'type' => fake()->randomElement(['practical','exam','test']),
             'score' => fake()->numberBetween(100, 200),
             'term' => fake()->randomElement(['first', 'second']),
-            'year' => fake()->year()
+            'year' => now()->year
         ];
     }
 }
