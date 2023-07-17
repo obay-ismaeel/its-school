@@ -17,7 +17,13 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'username' => fake()->unique()->userName(),
+            'password' => bcrypt('password'),
+            'first_name' => fake()->name(),
+            'last_name' => fake()->name(),
+            'phone_number' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'gender' => fake()->randomElement(['male','female'])
         ];
     }
 }

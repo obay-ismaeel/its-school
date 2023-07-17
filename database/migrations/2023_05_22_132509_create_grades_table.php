@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('number')->unique();
+            $table->tinyInteger('number');
             $table->string('name');
             $table->enum('type', ['scientific','literary', 'basic'])->default('basic');
             $table->timestamps();

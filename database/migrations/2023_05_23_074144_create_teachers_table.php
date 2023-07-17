@@ -28,6 +28,7 @@ return new class extends Migration
             $table->boolean('is_principle')->default(false);
             $table->enum('gender', ['male','female']);
 
+
             $table->timestamps();
         });
     }

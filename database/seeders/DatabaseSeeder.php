@@ -28,7 +28,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // Grade::factory(10)->create();
+        // Course::factory(20)->create();
+        // GradeCourse::factory(20)->create();
+        // Section::factory(20)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
@@ -181,8 +184,10 @@ class DatabaseSeeder extends Seeder
                 }
             }
 
+            // Posts
             Attachment::factory(30)->create();
 
+            // Marks
             for($i = 13 ; $i < 19 ; $i++)
             {
                 Mark::factory()->create([
@@ -191,6 +196,7 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
 
+            // Schedule
             $days = ['sunday','monday','tuesday','wednesday','thursday'];
             for($i = 1 ; $i < Section::count() ; $i++)
             {
@@ -207,6 +213,7 @@ class DatabaseSeeder extends Seeder
                 }
             }
 
+            // Totals
             for($i = 13 ; $i < 19 ; $i++)
             {
                 Total::factory()->create([

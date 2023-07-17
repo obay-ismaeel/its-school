@@ -17,7 +17,9 @@ class SectionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'grade_id' => fake()->numberBetween(1,10),
+            'number' => fake()->numberBetween(1,10),
+            'name' => fake()->randomLetter(),
         ];
     }
 }
