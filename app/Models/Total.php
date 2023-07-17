@@ -9,6 +9,14 @@ class Total extends Model
 {
     use HasFactory;
 
+    protected $appends = ['course_name'];
+    protected $hidden = ['created_at', 'updated_at'];
+
+    public function getCourseNameAttribute()
+    {
+        return $this->gradeCourse->course()->value('name');
+    }
+
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id');

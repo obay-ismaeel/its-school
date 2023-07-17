@@ -24,7 +24,6 @@ class GuardianFactory extends Factory
             'last_name' => fake()->lastName(),
             'phone_number' => fake()->phoneNumber(),
             'job' => fake()->jobTitle(),
-            'address' => fake()->address(),
             'gender' => fake()->randomElement(['male','female'])
         ];
     }

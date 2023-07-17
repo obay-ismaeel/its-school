@@ -26,12 +26,12 @@ Route::middleware(['auth:sanctum', 'abilities:student'])
     ->prefix('students')->group(function(){
     Route::get('profile', [StudentController::class, 'profile']);
     Route::get('courses', [CourseController::class, 'studentIndex']);
-    Route::get('courses', [CourseController::class, 'show']);
+    Route::get('course/about', [CourseController::class, 'show']);
     Route::get('assignments', [AssignmentController::class, 'studentIndex']);
     Route::get('homepage/assignments', [AssignmentController::class, 'studentHomePageIndex']);
+    Route::put('assignments', [AssignmentController::class, 'check']);
     Route::get('posts', [PostController::class, 'studentIndex']);
     Route::get('marks', [MarkController::class, 'studentIndex']);
     Route::get('schedule', [SectionScheduleController::class , 'studentIndex']);
     Route::get('totals', [MarkController::class, 'total']);
-    Route::put('assignments', [AssignmentController::class, 'check']);
 });
