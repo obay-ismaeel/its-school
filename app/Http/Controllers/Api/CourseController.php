@@ -10,24 +10,36 @@ use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
-    public function studentIndex()
+    public function index(Request $request)
     {
+        if(! Auth::user()->section_id){
+            $request->validate([
+                'student_id' => 'required'
+            ]);
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Courses for specific grade',
-            'courses' => Student::find(Auth::id())->section->grade->courses
+            'courses' => Student::find($request->student_id ? $request->student_id : Auth::id())->section->grade->courses
         ]);
     }
 
-    public function show(Request $request)
+    public function show(Request $request, $courseId)
     {
-        $request->validate([
-            'course_id' => 'required'
-        ]);
+        if(! Auth::user()->section_id){
+            $request->validate([
+                'student_id' => 'required'
+            ]);
+        }
 
-        $gradeId = Student::find(Auth::id())->section->grade->id;
-        $teacher = Student::find(Auth::id())->section->teachers()->where('course_id', $request->course_id)->first();
-        $information = GradeCourse::where('course_id', $request->course_id)->where('grade_id', $gradeId)->first();
+        $gradeId = Student::find($request->student_id ? $request->student_id : Auth::id())
+                            ->section->grade->id;
+
+        $teacher = Student::find($request->student_id ? $request->student_id : Auth::id())
+                            ->section->teachers()->where('course_id', $courseId)->first(['teachers.id', 'first_name', 'last_name']);
+
+        $information = GradeCourse::where('course_id', $courseId)->where('grade_id', $gradeId)->first();
         //$about = collect([$teacher, $information])->all();
 
         return response()->json([
@@ -37,4 +49,5 @@ class CourseController extends Controller
             'about' => $information
         ]);
     }
+
 }

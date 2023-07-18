@@ -11,14 +11,20 @@ use Illuminate\Support\Facades\Auth;
 
 class MarkController extends Controller
 {
-    public function studentIndex(Request $request)
+    public function index(Request $request)
     {
+        if(! Auth::user()->section_id){
+            $request->validate([
+                'student_id' => 'required'
+            ]);
+        }
+
         $request->validate([
             'course_id' => 'required',
             'year' => 'required'
         ]);
 
-        $gradeId = Student::find(Auth::id())->section->grade->id;
+        $gradeId = Student::find($request->student_id ? $request->student_id : Auth::id())->section->grade->id;
 
         $gradeCourseId = GradeCourse::where('course_id', $request->course_id)->where('grade_id', $gradeId)->value('id');
 
@@ -26,13 +32,13 @@ class MarkController extends Controller
             'status' => true,
             'message' => 'Student\'s marks in specific course',
 
-            'first_term' => Mark::where('student_id', Auth::id())
+            'first_term' => Mark::where('student_id', $request->student_id ? $request->student_id : Auth::id())
                                 ->where('grade_course_id', $gradeCourseId)
                                 ->where('term', 'first')
                                 ->where('year', $request->year)
                                 ->get(),
 
-            'second_term' => Mark::where('student_id', Auth::id())
+            'second_term' => Mark::where('student_id', $request->student_id ? $request->student_id : Auth::id())
                                 ->where('grade_course_id', $gradeCourseId)
                                 ->where('term', 'second')
                                 ->where('year', $request->year)
@@ -42,6 +48,12 @@ class MarkController extends Controller
 
     public function total(Request $request)
     {
+        if(! Auth::user()->section_id){
+            $request->validate([
+                'student_id' => 'required'
+            ]);
+        }
+
         $request->validate([
             'year' => 'required'
         ]);
@@ -49,7 +61,9 @@ class MarkController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Totals for a student',
-            'totals' => Student::find(Auth::id())->totals()->where('year', $request->year)->get()
+            'totals' => Student::find($request->student_id ? $request->student_id : Auth::id())
+                                ->totals()->where('year', $request->year)->get()
         ]);
     }
+
 }

@@ -12,27 +12,34 @@ use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
 {
-    public function studentIndex(Request $request)
+    public function index(Request $request)
     {
         // $gradeId = Student::find(Auth::id())->section->grade->id;
         // $gradeCourseId = GradeCourse::where('grade_id', $gradeId)
         //                             ->where('course_id', $courseId)
         //                             ->value('id');
 
+        if(! Auth::user()->section_id){
+            $request->validate([
+                'student_id' => 'required'
+            ]);
+        }
+
         $request->validate([
             'course_id' => 'required'
         ]);
 
-        $sectionId = Student::find(Auth::id())->section->id;
+        $sectionId = Student::find($request->student_id ? $request->student_id : Auth::id())->section->id;
 
-        $teacherId = Student::find(Auth::id())->section->teachers()->where('course_id', $request->course_id)->get()->value('id');
+        $teacherId = Student::find($request->student_id ? $request->student_id : Auth::id())
+                            ->section->teachers()->where('course_id', $request->course_id)->get()->value('id');
 
-        $assignments = Student::find(Auth::id())->assignments() //->where('grade_course_id', $gradeCourseId)
+        $assignments = Student::find($request->student_id ? $request->student_id : Auth::id())->assignments() //->where('grade_course_id', $gradeCourseId)
                                                 ->where('section_id', $sectionId)
                                                 ->where('teacher_id', $teacherId)
                                                 ->whereHas('assignmentStudent', fn($query) =>
                                                     $query->where('is_done', false)
-                                                            ->where('student_id', Auth::id())
+                                                            ->where('student_id', $request->student_id ? $request->student_id : Auth::id())
                                                 )->get();
 
         return response()->json([
@@ -42,16 +49,22 @@ class AssignmentController extends Controller
         ]);
     }
 
-    public function studentHomePageIndex()
+    public function homePageIndex(Request $request)
     {
-        $sectionId = Student::find(Auth::id())->section->id;
+        if(! Auth::user()->section_id){
+            $request->validate([
+                'student_id' => 'required'
+            ]);
+        }
 
-        $assignments = Student::find(Auth::id())
+        $sectionId = Student::find($request->student_id ? $request->student_id : Auth::id())->section->id;
+
+        $assignments = Student::find($request->student_id ? $request->student_id : Auth::id())
                                 ->assignments()
                                 ->where('section_id', $sectionId)
                                 ->whereHas('assignmentStudent', fn($query) =>
                                     $query->where('is_done', false)
-                                            ->where('student_id', Auth::id())
+                                            ->where('student_id', $request->student_id ? $request->student_id : Auth::id())
                                 )->orderby('due_date')->get();
 
         return response()->json([
@@ -61,14 +74,10 @@ class AssignmentController extends Controller
         ]);
     }
 
-    public function check(Request $request)
+    public function check($assignmentId)
     {
-        $request->validate([
-            'assignment_id' => 'required'
-        ]);
-
         AssignmentStudent::where('student_id', Auth::id())
-                            ->where('assignment_id', $request->assignment_id)
+                            ->where('assignment_id', $assignmentId)
                             ->update([
                                 'is_done' => true
                             ]);

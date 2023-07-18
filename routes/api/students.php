@@ -26,14 +26,14 @@ Route::post('students/login', [StudentController::class, 'login']);
 Route::middleware(['auth:sanctum', 'abilities:student'])
     ->prefix('students')->group(function(){
     Route::get('profile', [StudentController::class, 'profile']);
-    Route::get('courses', [CourseController::class, 'studentIndex']);
-    Route::get('course/about', [CourseController::class, 'show']);
-    Route::get('assignments', [AssignmentController::class, 'studentIndex']);
-    Route::get('homepage/assignments', [AssignmentController::class, 'studentHomePageIndex']);
-    Route::put('assignments', [AssignmentController::class, 'check']);
-    Route::get('posts', [PostController::class, 'studentIndex']);
-    Route::get('marks', [MarkController::class, 'studentIndex']);
+    Route::get('courses', [CourseController::class, 'index']);
+    Route::get('courses/{id}', [CourseController::class, 'show']);
+    Route::get('assignments', [AssignmentController::class, 'index']);
+    Route::get('assignments/homepage', [AssignmentController::class, 'homePageIndex']);
+    Route::put('assignments/{id}', [AssignmentController::class, 'check']);
+    Route::get('posts', [PostController::class, 'index']);
+    Route::get('marks', [MarkController::class, 'index']);
     Route::get('totals', [MarkController::class, 'total']);
-    Route::get('schedule', [SectionScheduleController::class , 'studentIndex']);
-    Route::get('attendances', [AttendanceController::class, 'attendanceDayCount']);
+    Route::get('schedules', [SectionScheduleController::class , 'index']);
+    Route::get('attendances', [AttendanceController::class, 'attendanceCount']);
 });

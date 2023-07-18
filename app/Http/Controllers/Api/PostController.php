@@ -11,9 +11,15 @@ use Carbon\Carbon;
 
 class PostController extends Controller
 {
-    public function studentIndex()
+    public function index(Request $request)
     {
-        $gradeId = Student::find(Auth::id())->section->grade->id;
+        if(! Auth::user()->section_id){
+            $request->validate([
+                'student_id' => 'required'
+            ]);
+        }
+
+        $gradeId = Student::find($request->student_id ? $request->student_id : Auth::id())->section->grade->id;
 
         return response()->json([
             'status' => true,
@@ -21,4 +27,5 @@ class PostController extends Controller
             'posts' => Post::with(['teacher.course:id,name', 'attachments'])->where('grade_id', $gradeId)->get()
         ]);
     }
+    
 }

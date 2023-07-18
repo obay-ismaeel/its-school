@@ -179,7 +179,8 @@ class DatabaseSeeder extends Seeder
                     {
                         AssignmentStudent::factory()->create([
                             'student_id' => $student->id,
-                            'assignment_id' => $assignment->id
+                            'assignment_id' => $assignment->id,
+                            'is_done' => false
                         ]);
                     }
                 }

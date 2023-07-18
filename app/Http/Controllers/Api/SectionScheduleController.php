@@ -9,12 +9,20 @@ use Illuminate\Support\Facades\Auth;
 
 class SectionScheduleController extends Controller
 {
-    public function studentIndex()
+    public function index(Request $request)
     {
+        if(! Auth::user()->section_id){
+            $request->validate([
+                'student_id' => 'required'
+            ]);
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Schedule for a section',
-            'schedule' => Student::find(Auth::id())->section->schedule()->orderby('order')->get()
+            'schedule' => Student::find($request->student_id ? $request->student_id : Auth::id())
+                                    ->section->schedule()->orderby('order')->get()
         ]);
     }
+
 }
