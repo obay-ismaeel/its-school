@@ -39,7 +39,7 @@ class GradeController extends Controller
     public function update(Request $request, Grade $grade)
     {
         $grade->update([
-            'number' => $request->number ? $request->name : $grade->number,
+            'number' => $request->number ? $request->number : $grade->number,
             'name' => $request->name ? $request->name : $grade->name,
             'type' => $request->type ? $request->type : $grade->type
         ]);

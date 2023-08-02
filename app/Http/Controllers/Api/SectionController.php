@@ -28,7 +28,7 @@ class SectionController extends Controller
     public function update(Request $request, Section $section)
     {
         $section->update([
-            'number' => $request->number ? $request->name : $section->number,
+            'number' => $request->number ? $request->number : $section->number,
             'name' => $request->name ? $request->name : $section->name,
             'grade_id' => $request->grade_id ? $request->grade_id : $section->grade_id
         ]);

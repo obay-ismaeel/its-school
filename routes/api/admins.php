@@ -38,16 +38,16 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
         Route::delete('grades/{grade}', [GradeController::class, 'destroy']);
 
         Route::post('sections', [SectionController::class, 'store']);
-        Route::put('sections', [SectionController::class, 'update']);
-        Route::delete('sections', [SectionController::class, 'destroy']);
+        Route::put('sections/{section}', [SectionController::class, 'update']);
+        Route::delete('sections/{section}', [SectionController::class, 'destroy']);
 
         Route::get('reports', [ReportController::class, 'index']);
-        Route::delete('reports', [ReportController::class, 'destroy']);
+        Route::delete('reports/{report}', [ReportController::class, 'destroy']);
 
         Route::get('grade/{id}/courses', [CourseGradeController::class, 'index']);
         Route::post('grades/courses', [CourseGradeController::class, 'store']);
-        Route::put('grades/courses', [CourseGradeController::class, 'update']);
-        Route::delete('grades/courses', [CourseGradeController::class, 'destroy']);
+        Route::put('grade/course', [CourseGradeController::class, 'update']);
+        Route::delete('grade/course', [CourseGradeController::class, 'destroy']);
 
         Route::get('students', [StudentController::class, 'index']);
         Route::post('students', [StudentController::class, 'store']);

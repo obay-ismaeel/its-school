@@ -20,6 +20,7 @@ class CourseFactory extends Factory
             'name' => fake()->unique()->randomElement(['sciences', 'physics', 'mathematics',
                                                         'history', 'geography', 'philosophy']),
             'description' => fake()->text(),
+            'image_path' => fake()->url()
         ];
     }
 }

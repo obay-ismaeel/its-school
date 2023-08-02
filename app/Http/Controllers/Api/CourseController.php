@@ -66,8 +66,11 @@ class CourseController extends Controller
     {
         $attributes = $request->validate([
             'name' => 'required|unique:courses,name',
-            'description' => 'required'
+            'description' => 'required',
+            'image_path' => 'required|image'
         ]);
+
+        $attributes['image_path'] = $request->file('image_path')->store('courses');
 
         $course = Course::create($attributes);
 

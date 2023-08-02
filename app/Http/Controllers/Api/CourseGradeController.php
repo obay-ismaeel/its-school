@@ -14,7 +14,7 @@ class CourseGradeController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Courses for specific grade',
-            'courses' => Grade::find($gradeId)->courses
+            'courses' => Grade::findOrFail($gradeId)->courses
         ]);
     }
 

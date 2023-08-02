@@ -95,9 +95,6 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         $student->update($request->all());
-        // $student->update([
-        //     'image_url' => $request->file('image_url') ? $request->file('image_url')->store('students') : $student->image_url
-        // ]);
 
         return response()->json([
             'status' => true,
