@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('section_schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('section_id')->constrained();
-            $table->foreignId('grade_course_id')->constrained();
+            $table->foreignId('section_id')->constrained()->cascadeOnDelete();;
+            $table->foreignId('grade_course_id')->constrained()->cascadeOnDelete();
 
             $table->tinyInteger('order');
             $table->time('start_at');

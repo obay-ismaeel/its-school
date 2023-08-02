@@ -19,7 +19,7 @@ class GuardianFactory extends Factory
         return [
             'username' => fake()->unique()->userName(),
             'password' => fake()->password(),
-
+            'email' => fake()->email(),
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'phone_number' => fake()->phoneNumber(),

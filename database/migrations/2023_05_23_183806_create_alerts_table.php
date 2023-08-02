@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('alerts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained();
-            $table->foreignId('teacher_id')->constrained();
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete();;
+            $table->foreignId('teacher_id')->constrained()->cascadeOnDelete();;
 
             $table->string('title');
             $table->text('content');
