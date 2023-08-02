@@ -93,6 +93,7 @@ class DatabaseSeeder extends Seeder
                 {
                     Student::factory(15)->create([
                         'section_id' => $j,
+                        'grade_id' => Section::find($j)->grade->id
                     ]);
                 }
 
