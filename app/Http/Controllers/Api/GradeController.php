@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
+use App\Models\Section;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GradeController extends Controller
 {
@@ -60,6 +63,17 @@ class GradeController extends Controller
             'message' => 'grade has deleted successfully',
             'grade' => null
         ], 204);
+    }
+
+    public function teacherIndex(Section $section){
+        $teacher = Teacher::find(Auth::user()->id);
+
+        $courses = $teacher->is_principle ? $section->grade->courses : $teacher->course;
+
+        return response()->json([
+            'message' => 'success',
+            'data' => $courses
+        ]);
     }
 
 }

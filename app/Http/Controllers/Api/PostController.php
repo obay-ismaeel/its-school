@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\Post;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 class PostController extends Controller
 {
@@ -27,5 +27,36 @@ class PostController extends Controller
             'posts' => Post::with(['teacher.course:id,name', 'attachments'])->where('grade_id', $gradeId)->get()
         ]);
     }
-    
+
+    public function store(Request $request) {
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'type' => 'required',
+            'file' => 'file'
+        ]);
+
+        $teacher = Teacher::find(Auth::user()->id);
+
+        $post = Post::create([
+            'teacher_id' => $teacher->id,
+            'grade_id' => $teacher->grade_id,
+            'title'=>  $request['title'],
+            'content' =>   $request['content'],
+            'type' => $request['type']
+        ]);
+
+        if($request['file']){   // !!! CORRECT THE TYPE OF THE ATTACHMENT !!!
+            $post->attachments->create([
+                'file_url' => '/storage/' . $request['file']->store('posts'),
+                'type' => 'image'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'data' => $post
+        ]);
+    }
+
 }
