@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('grade_id')->nullable()->constrained();
-            $table->foreignId('section_id')->nullable()->constrained();
+            $table->foreignId('grade_id')->nullable()->constrained()->cascadeOnDelete();;
+            $table->foreignId('section_id')->nullable()->constrained()->cascadeOnDelete();;
 
             $table->string('username')->unique();
             $table->string('password');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->string('address');
             $table->string('phone_number');
-            $table->text('bio');
+            $table->text('bio')->nullable();
             $table->string('image_url')->nullable();
             $table->enum('gender',['male','female']);
             $table->enum('type',['scientific','literary','basic']);

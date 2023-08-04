@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('grade_id');
+            $table->foreignId('grade_id')->constrained()->cascadeOnDelete();;
             $table->tinyInteger('number');
             $table->string('name');
             $table->unique(['grade_id','number']);

@@ -27,7 +27,7 @@ class StudentFactory extends Factory
             'last_name' => fake()->lastName(),
             'gender' => fake()->randomElement(['male', 'female']),
             'address' => fake()->address(),
-            'phone_number' => fake()->phoneNumber(),
+            'phone_number' => '09' . fake()->numberBetween(10000000, 99999999),
             'bio' => fake()->text(),
             'image_url' => 'https://i.pravatar.cc/150?u=' . $username,
             'date_of_birth' => fake()->date(),

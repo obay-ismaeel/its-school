@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('grade_courses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('grade_id')->constrained();
-            $table->foreignId('course_id')->constrained();
+            $table->foreignId('grade_id')->constrained()->cascadeOnDelete();;
+            $table->foreignId('course_id')->constrained()->cascadeOnDelete();
             $table->text('description');
-            $table->integer('number of weekly classes');
+            $table->integer('number_of_weekly_classes');
             $table->integer('top_mark');
             $table->integer('lower_mark');
             $table->unique(['grade_id', 'course_id']);

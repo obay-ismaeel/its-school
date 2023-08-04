@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_id')->constrained('teachers');
-            $table->foreignId('grade_id')->constrained('grades');
+            $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();;
+            $table->foreignId('grade_id')->constrained('grades')->cascadeOnDelete();;
 
             $table->string('title');
             $table->text('content');

@@ -17,6 +17,7 @@ use App\Models\Course;
 use App\Models\GradeCourse;
 use App\Models\Mark;
 use App\Models\Post;
+use App\Models\Report;
 use App\Models\SectionSchedule;
 use App\Models\SectionTeacher;
 use App\Models\StudentAttendance;
@@ -92,6 +93,7 @@ class DatabaseSeeder extends Seeder
                 {
                     Student::factory(15)->create([
                         'section_id' => $j,
+                        'grade_id' => Section::find($j)->grade->id
                     ]);
                 }
 
@@ -227,5 +229,8 @@ class DatabaseSeeder extends Seeder
             // Students attendance
             StudentAttendance::factory(30)->create();
             StudentAttendance::factory(10)->create(['student_id' => 91]);
+
+            // Reports
+            Report::factory(10)->create();
     }
 }

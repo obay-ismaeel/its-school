@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('section_id')->constrained();
-            $table->foreignId('teacher_id')->constrained();
-            $table->foreignId('grade_course_id')->nullable()->constrained();
+            $table->foreignId('section_id')->constrained()->cascadeOnDelete();;
+            $table->foreignId('teacher_id')->constrained()->cascadeOnDelete();;
+            $table->foreignId('grade_course_id')->nullable()->constrained()->cascadeOnDelete();
 
             $table->string('title');
             $table->text('content');

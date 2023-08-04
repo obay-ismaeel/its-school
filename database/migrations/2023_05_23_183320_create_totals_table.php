@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('totals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students');
-            $table->foreignId('grade_course_id')->constrained('grade_courses');
+            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();;
+            $table->foreignId('grade_course_id')->constrained('grade_courses')->cascadeOnDelete();
 
             $table->year('year');
             $table->integer('first_term_score');

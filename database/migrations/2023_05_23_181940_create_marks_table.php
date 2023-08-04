@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('marks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students');
-            $table->foreignId('grade_course_id')->constrained('grade_courses');
+            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();;
+            $table->foreignId('grade_course_id')->constrained('grade_courses')->cascadeOnDelete();
 
             $table->enum('type', ['practical','exam','test']);
             $table->integer('score');

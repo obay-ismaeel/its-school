@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
+    // Guardians
     public function store(Request $request)
     {
         $request->validate([
@@ -30,4 +31,26 @@ class ReportController extends Controller
             'report' => $report
         ], 201);
     }
+
+    // Admins
+    public function index()
+    {
+        return response()->json([
+            'status' => true,
+            'message' => 'All reports from parents',
+            'reports' => Report::orderBy('created_at', 'desc')->get()
+        ]);
+    }
+
+    public function destroy(Report $report)
+    {
+        $report->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'report has deleted successfully',
+            'report' => null
+        ], 204);
+    }
+
 }
