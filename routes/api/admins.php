@@ -51,7 +51,7 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
 
         Route::get('students', [StudentController::class, 'index']);
         Route::post('students', [StudentController::class, 'store']);
-        Route::put('students/{student}', [StudentController::class, 'update']);
+        Route::patch('students/{student}', [StudentController::class, 'update']);
         Route::delete('students/{student}', [StudentController::class, 'destroy']);
         Route::get('students/{student}', [StudentController::class, 'show']);
     });

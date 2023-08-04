@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->string('address');
             $table->string('phone_number');
-            $table->text('bio');
+            $table->text('bio')->nullable();
             $table->string('image_url')->nullable();
             $table->enum('gender',['male','female']);
             $table->enum('type',['scientific','literary','basic']);

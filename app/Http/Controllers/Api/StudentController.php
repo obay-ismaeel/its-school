@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Student;
 use App\Traits\UserNameTrait;
-
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -81,7 +81,10 @@ class StudentController extends Controller
 
         $attributes['password'] = substr($attributes['first_name'], 0, 2) . mt_rand(10000, 99999) . substr($attributes['last_name'], 0, 2);
 
+        if($request->hasFile('image_url'))
         $attributes['image_url'] = $request->file('image_url')->store('students');
+        else
+        $attributes['image_url'] = 'default_image.png';
 
         $student = Student::create($attributes);
 

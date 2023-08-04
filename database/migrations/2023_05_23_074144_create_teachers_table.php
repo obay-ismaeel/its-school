@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone_number');
             $table->string('image_url');
-            $table->text('bio');
+            $table->text('bio')->nullable();
             $table->date('date_of_birth');
             $table->boolean('is_principle')->default(false);
             $table->enum('gender', ['male','female']);
