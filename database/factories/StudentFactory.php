@@ -16,10 +16,11 @@ class StudentFactory extends Factory
      */
     public function definition(): array
     {
+        $username = fake()->unique()->userName();
         return [
             'section_id' => fake()->numberBetween(1, 6),
             //'grade_id' => fake()->numberBetween(1, 3),
-            'username' => fake()->unique()->userName(),
+            'username' => $username,
             'password' => fake()->password(),
             'first_name' => fake()->firstName(),
             'middle_name' => fake()->name(),
@@ -28,7 +29,7 @@ class StudentFactory extends Factory
             'address' => fake()->address(),
             'phone_number' => fake()->phoneNumber(),
             'bio' => fake()->text(),
-            'image_url' => fake()->url(),
+            'image_url' => 'https://i.pravatar.cc/150?u=' . $username,
             'date_of_birth' => fake()->date(),
             'type' => fake()->randomElement(['literary', 'scientific', 'basic'])
         ];

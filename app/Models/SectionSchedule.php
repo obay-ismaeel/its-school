@@ -9,13 +9,24 @@ class SectionSchedule extends Model
 {
     use HasFactory;
 
-    protected $appends = ['course_name'];
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $appends = ['grade', 'course_name', 'section'];
+    protected $hidden = ['created_at', 'updated_at' ];
 
     public function getCourseNameAttribute()
     {
         return $this->gradeCourse->course()->value('name');
     }
+
+    public function getGradeAttribute()
+    {
+        return $this->gradeCourse->grade()->value('name');
+    }
+
+    public function getSectionAttribute()
+    {
+        return $this->section()->value('name');
+    }
+
 
     public function section()
     {

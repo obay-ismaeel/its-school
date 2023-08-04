@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\CalendarController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\AssignmentController;
+use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TeacherController;
-use App\Http\Controllers\CalenderController;
-use App\Models\CalendarItem;
-use App\Models\Teacher;
+use App\Http\Controllers\Api\TeacherGradesController;
+use App\Http\Controllers\Api\TeacherSchedule;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +18,16 @@ use App\Models\Teacher;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::prefix('teachers', function(){
-    Route::post('teachers/login', [TeacherController::class, 'login']);
-    Route::get('profile', [TeacherController::class, 'profile'])
-        ->middleware(['auth:sanctum', 'abilities:teacher']);
-    Route::get('logout', [TeacherController::class, 'logout']);
-});
-
-Route::get('calendar', [CalendarController::class, 'index']);
+Route::post('teachers/login', [TeacherController::class, 'login']);
+Route::middleware(['auth:sanctum', 'abilities:teacher'])
+    ->prefix('teachers')->group(function(){
+        Route::get('profile', [TeacherController::class, 'profile'])
+            ->middleware(['auth:sanctum', 'abilities:teacher']);
+        Route::get('logout', [TeacherController::class, 'logout']);
+        Route::get('schedule', [TeacherSchedule::class, 'index']);
+        Route::get('sections/{section}/students', [StudentController::class, 'bySection']);
+        Route::get('grades', [TeacherGradesController::class, 'index']);
+        Route::get('grades/{grade}/sections', [TeacherGradesController::class, 'sections']);
+        Route::post('attendance', [AttendanceController::class, 'store']);
+        Route::post('assignments', [AssignmentController::class, 'store']);
+    });

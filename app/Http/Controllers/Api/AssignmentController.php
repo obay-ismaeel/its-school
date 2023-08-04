@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assignment;
 use App\Models\AssignmentStudent;
+use App\Models\Grade;
 use App\Models\GradeCourse;
+use App\Models\Section;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
@@ -85,6 +88,40 @@ class AssignmentController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Assignment has checked'
+        ]);
+    }
+
+    public function store(Request $request) {
+        $request->validate([
+            'title'=>'required',
+            'content'=>'required',
+            'due_date'=>'required',
+            'type'=>'required',
+            'sections'=>'required',
+        ]);
+
+        $teacher = Teacher::find(Auth::user()->id);
+
+        $assignments=[];
+        foreach($request['sections'] as $section){
+            $grade_course =
+            GradeCourse::where('grade_id', Section::find($section['id'])->grade->id )
+            ->where('course_id', $teacher->course->id)
+            ->first();
+            $assignments[] = Assignment::create([
+                'teacher_id' => $teacher->id,
+                'section_id' => $section['id'],
+                'grade_course_id' => $grade_course->id,
+                'title' => $request['title'],
+                'content' => $request['content'],
+                'due_date' => $request['due_date'],
+                'type' => $request['type']
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'data'=>$assignments
         ]);
     }
 }
