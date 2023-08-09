@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attachment;
 use App\Models\Student;
 use App\Models\Post;
 use App\Models\Teacher;
@@ -21,10 +22,15 @@ class PostController extends Controller
 
         $gradeId = Student::find($request->student_id ? $request->student_id : Auth::id())->section->grade->id;
 
+        //I changed it for testing
+        $posts = Post::with(['teacher.course:id,name', 'attachments'])->get();
+
+        // $posts = $posts->where('grade_id', $gradeId);
+
         return response()->json([
             'status' => true,
             'message' => 'All posts for a grade',
-            'posts' => Post::with(['teacher.course:id,name', 'attachments'])->where('grade_id', $gradeId)->get()
+            'posts' => $posts
         ]);
     }
 
@@ -33,22 +39,29 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required',
             'type' => 'required',
-            'file' => 'file'
+            'grade_id' => 'required|exists:grades,id',
+            'files' => 'required|array',  // Add validation for the 'files' field
+            'files.*' => 'file'
         ]);
 
+        //dd($request);
         $teacher = Teacher::find(Auth::user()->id);
 
         $post = Post::create([
             'teacher_id' => $teacher->id,
-            'grade_id' => $teacher->grade_id,
+            'grade_id' => $request['grade_id'],
             'title'=>  $request['title'],
             'content' =>   $request['content'],
             'type' => $request['type']
         ]);
 
-        if($request['file']){   // !!! CORRECT THE TYPE OF THE ATTACHMENT !!!
-            $post->attachments->create([
-                'file_url' => '/storage/' . $request['file']->store('posts'),
+        // !!! CORRECT THE TYPE OF THE ATTACHMENT !!!
+
+        foreach($request['files'] as $file){
+            error_log('hello');
+            Attachment::create([
+                'post_id' => $post->id,
+                'file_url' => '/storage/' . $file->store('posts'),
                 'type' => 'image'
             ]);
         }

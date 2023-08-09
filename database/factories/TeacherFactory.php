@@ -16,6 +16,8 @@ class TeacherFactory extends Factory
      */
     public function definition(): array
     {
+        $username = fake()->unique()->userName();
+
         return [
             'course_id' => fake()->numberBetween(1, 6),
             'is_principle' => fake()->boolean(),
@@ -24,9 +26,9 @@ class TeacherFactory extends Factory
             'bio' => fake()->text(),
             'phone_number' => '09' . fake()->numberBetween(10000000, 99999999),
             'address' => fake()->address(),
-            'username' => fake()->unique()->userName(),
+            'username' => $username,
             'password' => fake()->password(),
-            'image_url' => 'default_image.png',
+            'image_url' => 'https://i.pravatar.cc/150?u=' . $username,
             'gender' => fake()->randomElement(['male', 'female']),
             'date_of_birth' => fake()->date()
         ];

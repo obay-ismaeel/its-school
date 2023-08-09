@@ -32,10 +32,10 @@ class Student extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function getImageUrlAttribute($path)
-    {
-        return env('APP_URL') .':8000/storage/' . $path;
-    }
+    // public function getImageUrlAttribute($path)
+    // {
+    //     return env('APP_URL') .':8000/storage/' . $path;
+    // }
 
     public function grade()
     {
