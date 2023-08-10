@@ -17,11 +17,17 @@ class SectionScheduleController extends Controller
             ]);
         }
 
+        $scheduleItems = Student::find($request->student_id ? $request->student_id : Auth::id())
+                                    ->section->schedule()->orderBy('order')->get();
+
+        $scheduleItems = $scheduleItems
+                        ->mapToGroups( fn($scheduleItem) => [$scheduleItem['day'] => $scheduleItem] );
+
+
         return response()->json([
             'status' => true,
             'message' => 'Schedule for a section',
-            'schedule' => Student::find($request->student_id ? $request->student_id : Auth::id())
-                                    ->section->schedule()->orderby('order')->get()
+            'schedule' => $scheduleItems
         ]);
     }
 

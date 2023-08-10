@@ -14,7 +14,9 @@ use App\Models\Guardian;
 use App\Models\Grade;
 use App\Models\Section;
 use App\Models\Course;
+use App\Models\ExamSchedule;
 use App\Models\GradeCourse;
+use App\Models\GuardianStudent;
 use App\Models\Mark;
 use App\Models\Post;
 use App\Models\Report;
@@ -120,7 +122,7 @@ class DatabaseSeeder extends Seeder
             // Login multi-auth
                 Admin::factory() -> create([
                     'username' => 'majdham',
-                    'password' => bcrypt(123456),
+                    'password' => '123456',
                     'first_name' => 'majd',
                     'last_name' => 'hammad',
                     'phone_number' => '0997311959',
@@ -130,38 +132,40 @@ class DatabaseSeeder extends Seeder
 
                 Student::factory()->create([
                     'section_id' => 5,
+                    'grade_id' => 3,
                     'username' => 'obayism',
-                    'password' => bcrypt(456789),
+                    'password' => '456789',
                     'first_name' => 'obay',
                     'middle_name' => 'hany',
                     'last_name' => 'ismail',
                     'date_of_birth' => fake()->date(),
                     'address' => fake()->address(),
-                    'phone_number' => fake()->phoneNumber(),
+                    'phone_number' => '0934558769',
                     'bio' => fake()->text(),
                     'gender' => fake()->randomElement(['male', 'female']),
                     'type' => fake()->randomElement(['scientific','literary','basic']),
                 ]);
 
                 Teacher::factory()->create([
+                    'is_principle' => 0,
                     'username' => 'obayism',
-                    'password' => bcrypt(456789),
+                    'password' => '456789',
                     'first_name' => 'obay',
                     'last_name' => 'ismail',
                     'date_of_birth' => fake()->date(),
                     'address' => fake()->address(),
-                    'phone_number' => fake()->phoneNumber(),
+                    'phone_number' => '0934558769',
                     'bio' => fake()->text(),
                     'gender' => fake()->randomElement(['male', 'female']),
-                    'image_url' => fake()->url(),
+
                 ]);
 
                 Guardian::factory()->create([
                     'username' => 'obayism',
-                    'password' => bcrypt(456789),
+                    'password' => '456789',
                     'first_name' => 'obay',
                     'last_name' => 'ismail',
-                    'phone_number' => fake()->phoneNumber(),
+                    'phone_number' => '0934558769',
                     'job' => fake()->text(),
                     'gender' => fake()->randomElement(['male', 'female']),
                     'email' => fake()->email(),
@@ -232,5 +236,20 @@ class DatabaseSeeder extends Seeder
 
             // Reports
             Report::factory(10)->create();
+
+            // Guardian_Student
+            GuardianStudent::factory(20)->create();
+            GuardianStudent::factory(2)->create([
+                'student_id' => mt_rand(1, 40),
+                'guardian_id' => 1
+            ]);
+
+            // Exam schedule
+            ExamSchedule::factory(20)->create();
+            for($i = 13 ; $i < 19 ; $i++){
+                ExamSchedule::factory()->create([
+                    'grade_course_id' => $i
+                ]);
+            }
     }
 }

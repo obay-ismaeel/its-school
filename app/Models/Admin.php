@@ -12,7 +12,12 @@ class Admin extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
-    // protected $hidden = [
-    //     'password'
-    // ];
+    protected $hidden = [
+        'password'
+    ];
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
 }
