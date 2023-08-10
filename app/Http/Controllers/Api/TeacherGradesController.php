@@ -12,15 +12,17 @@ use Illuminate\Support\Facades\Auth;
 class TeacherGradesController extends Controller
 {
     function index() {
-        if(Teacher::find(Auth::user()->id)->is_principle){
+        $teacher = Teacher::find(Auth::user()->id);
+
+        if($teacher->is_principle){
             return response()->json([
                 'message' => 'success',
                 'data' => Grade::all()->sortBy('number')
             ]);
         }
 
-        $teacher = Teacher::find(Auth::user()->id);
         $sections = $teacher->sections;
+
         $grades = $sections->map( function($section){ return $section->grade; } )->unique();
 
         return response()->json([
