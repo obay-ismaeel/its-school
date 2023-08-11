@@ -8,11 +8,13 @@ use App\Models\GradeCourse;
 use App\Models\Mark;
 use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\Total;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MarkController extends Controller
 {
+    // Students and guardians
     public function index(Request $request)
     {
         if(! Auth::user()->section_id){
@@ -64,10 +66,29 @@ class MarkController extends Controller
             'status' => true,
             'message' => 'Totals for a student',
             'totals' => Student::find($request->student_id ? $request->student_id : Auth::id())
-                                ->totals()->where('year', $request->year)->get()
+                                ->totals()->with(['gradeCourse:id,course_id', 'gradeCourse.course:id,name'])
+                                ->where('year', $request->year)
+                                ->get()
         ]);
     }
 
+    public function getYears(Request $request)
+    {
+        if(! Auth::user()->section_id){
+            $request->validate([
+                'student_id' => 'required'
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'success',
+            'data' => Total::distinct()->where('student_id', $request->student_id ? $request->student_id : Auth::id())
+                            ->get(['year'])
+        ]);
+    }
+
+    // Teacher
     public function teacherStore(Request $request, Student $student) {
 
         $request->validate([

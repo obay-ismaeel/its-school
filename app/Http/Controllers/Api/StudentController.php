@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\GuardianStudent;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Student;
 use App\Traits\UserNameTrait;
+use App\Models\StudentAttendance;
 use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
@@ -29,7 +31,7 @@ class StudentController extends Controller
             return response() -> json([
                 'status' => false,
                 'message' => 'login failed'
-            ]);
+            ], 401);
         }
 
         return response() -> json([
@@ -46,7 +48,7 @@ class StudentController extends Controller
             'message' => 'Student profile',
             'profile' => Auth::user(),
             'section' => Student::find(Auth::id())->section,
-            'grade' => Student::find(Auth::id())->section->grade
+            'grade' => Student::find(Auth::id())->grade
         ]);
     }
 
@@ -57,7 +59,7 @@ class StudentController extends Controller
         $students = $students->map( function($student){
             $absence = $student->attendance->where('attended',0)->count();
             return $student->setAttribute('absence', $absence);
-         } );
+        } );
         return response()->json([
             'message'=>'success',
             'data'=> $students
@@ -88,8 +90,10 @@ class StudentController extends Controller
             'bio' => 'required',
             'image_url' => 'image',
             'gender' => 'required',
-            'type' => 'required'
+            'type' => 'required',
         ]);
+
+        $request->validate(['guardian_id' => 'required|exists:guardians,id']);
 
         $attributes['username'] = $this->studentUserNameGenerate($attributes['first_name'], $attributes['last_name']);
 
@@ -101,6 +105,11 @@ class StudentController extends Controller
         $attributes['image_url'] = 'default_image.png';
 
         $student = Student::create($attributes);
+
+        GuardianStudent::create([
+            'student_id' => $student->id,
+            'guardian_id' => $request->guardian_id
+        ]);
 
         return response()->json([
             'status' => true,
@@ -133,10 +142,22 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
+        $scheduleItems = Student::find($student->id)
+        ->section->schedule()->orderBy('order')->get();
+
+        $scheduleItems = $scheduleItems
+        ->mapToGroups( fn($scheduleItem) => [$scheduleItem['day'] => $scheduleItem] );
+
         return response()->json([
             'status' => true,
             'message' => 'Student profile',
-            'student' => Student::with(['section', 'grade'])->find($student->id)
+            'student' => Student::with(['section', 'grade'])->find($student->id),
+            'schedule' => $scheduleItems,
+            'attendance' => StudentAttendance::where('student_id', $student->id)
+                                                ->where('attended', true)->count(),
+
+            'absence' => StudentAttendance::where('student_id', $student->id)
+                                            ->where('attended', false)->count()
         ]);
     }
 }

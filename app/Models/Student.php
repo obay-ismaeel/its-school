@@ -32,6 +32,11 @@ class Student extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
     // public function getImageUrlAttribute($path)
     // {
     //     return env('APP_URL') .':8000/storage/' . $path;
@@ -49,7 +54,7 @@ class Student extends Authenticatable
 
     public function guardians()
     {
-        return $this->belongsToMany(Student::class,'guardian_students');
+        return $this->belongsToMany(Guardian::class,'guardian_students');
     }
 
     public function attendance()

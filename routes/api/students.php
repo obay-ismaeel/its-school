@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AssignmentController;
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\ExamScheduleController;
 use App\Http\Controllers\Api\MarkController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\SectionScheduleController;
@@ -26,7 +27,7 @@ Route::post('students/login', [StudentController::class, 'login']);
 Route::middleware(['auth:sanctum', 'abilities:student'])
     ->prefix('students')->group(function(){
     Route::get('profile', [StudentController::class, 'profile']);
-    
+
     Route::get('courses', [CourseController::class, 'index']);
     Route::get('courses/{id}', [CourseController::class, 'show']);
 
@@ -40,5 +41,8 @@ Route::middleware(['auth:sanctum', 'abilities:student'])
     Route::get('totals', [MarkController::class, 'total']);
 
     Route::get('schedules', [SectionScheduleController::class , 'index']);
+    Route::get('examschedule', [ExamScheduleController::class, 'index']);
     Route::get('attendances', [AttendanceController::class, 'attendanceCount']);
+
+    Route::get('years', [MarkController::class, 'getYears']);
 });
