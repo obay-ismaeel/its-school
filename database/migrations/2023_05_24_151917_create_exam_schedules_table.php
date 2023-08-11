@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('grade_course_id')->constrained()->cascadeOnDelete();;
 
-            $table->dateTime('start_at');
-            $table->dateTime('duartion');
+            $table->time('start_at');
+            $table->time('duartion');
+            $table->date('date');
             $table->enum('type',['exam','test','quiz']);
 
             $table->timestamps();
