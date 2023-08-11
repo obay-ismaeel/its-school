@@ -30,6 +30,7 @@ class TeacherController extends Controller
         return response() -> json([
             'status' => true,
             'message' => 'login success',
+            'is_principle' => $teacher->is_principle,
             'token' => $teacher -> createToken('authToken', ['teacher']) -> plainTextToken
         ]);
     }
