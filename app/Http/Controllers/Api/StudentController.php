@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Student;
 use App\Traits\UserNameTrait;
+use App\Models\StudentAttendance;
 use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
@@ -141,10 +142,22 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
+        $scheduleItems = Student::find($student->id)
+        ->section->schedule()->orderBy('order')->get();
+
+        $scheduleItems = $scheduleItems
+        ->mapToGroups( fn($scheduleItem) => [$scheduleItem['day'] => $scheduleItem] );
+
         return response()->json([
             'status' => true,
             'message' => 'Student profile',
-            'student' => Student::with(['section', 'grade'])->find($student->id)
+            'student' => Student::with(['section', 'grade'])->find($student->id),
+            'schedule' => $scheduleItems,
+            'attendance' => StudentAttendance::where('student_id', $student->id)
+                                                ->where('attended', true)->count(),
+
+            'absence' => StudentAttendance::where('student_id', $student->id)
+                                            ->where('attended', false)->count()
         ]);
     }
 }

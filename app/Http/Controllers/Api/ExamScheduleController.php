@@ -23,15 +23,20 @@ class ExamScheduleController extends Controller
 
         $gradeCourseIds = GradeCourse::where('grade_id', $student->grade->id)->pluck('id');
 
-        $examSchedule = ExamSchedule::with(['gradeCourse:id,course_id', 'gradeCourse.course:id,name'])
-                    ->whereIn('grade_course_id', $gradeCourseIds)
+        $examSchedule = ExamSchedule:://with(['gradeCourse:id,course_id', 'gradeCourse.course:id,name'])
+                    whereIn('grade_course_id', $gradeCourseIds)
                     ->get();
+
+        foreach($examSchedule as $value){
+            $courseName = GradeCourse::find($value->grade_course_id)->course->name;
+            $value->setAttribute('course_name', $courseName);
+        }
 
         return response()->json([
             'status' => true,
             'message' => 'Exam schedule',
             'data' => $examSchedule
         ]);
-        
+
     }
 }
