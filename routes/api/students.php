@@ -29,7 +29,7 @@ Route::middleware(['auth:sanctum', 'abilities:student'])
     Route::get('profile', [StudentController::class, 'profile']);
 
     Route::get('courses', [CourseController::class, 'index']);
-    Route::get('courses/{id}', [CourseController::class, 'show']);
+    Route::get('courses/about', [CourseController::class, 'show']);
 
     Route::get('assignments', [AssignmentController::class, 'index']);
     Route::get('assignments/homepage', [AssignmentController::class, 'homePageIndex']);

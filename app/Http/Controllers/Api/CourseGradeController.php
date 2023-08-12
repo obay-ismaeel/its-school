@@ -58,7 +58,7 @@ class CourseGradeController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Gradecourse has updated successfully',
-            'section' => $gradeCourse
+            'gradecourse' => $gradeCourse
         ]);
     }
 

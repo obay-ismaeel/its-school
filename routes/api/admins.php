@@ -10,7 +10,10 @@ use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\GuardianController;
 use App\Http\Controllers\Api\RoomController;
+use App\Http\Controllers\Api\SectionScheduleController;
+use App\Http\Controllers\Api\SectionTeacherController;
 use App\Models\GradeCourse;
+use App\Models\SectionSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +46,7 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
         Route::post('sections', [SectionController::class, 'store']);
         Route::put('sections/{section}', [SectionController::class, 'update']);
         Route::delete('sections/{section}', [SectionController::class, 'destroy']);
+        Route::get('grades/{grade}/sections', [SectionController::class, 'sectionsByGrade']);
 
         Route::get('reports', [ReportController::class, 'index']);
         Route::delete('reports/{report}', [ReportController::class, 'destroy']);
@@ -57,12 +61,16 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
         Route::patch('students/{student}', [StudentController::class, 'update']);
         Route::delete('students/{student}', [StudentController::class, 'destroy']);
         Route::get('students/{student}', [StudentController::class, 'show']);
+        Route::get('sections/{section}/students', [StudentController::class, 'studentsBySection']);
+        Route::get('grades/{grade}/students', [StudentController::class, 'studentsByGrade']);
+        Route::get('student/top', [StudentController::class, 'topStudents']);
 
         Route::get('teachers', [TeacherController::class, 'index']);
         Route::post('teachers', [TeacherController::class, 'store']);
         Route::patch('teachers/{teacher}', [TeacherController::class, 'update']);
         Route::delete('teachers/{teacher}', [TeacherController::class, 'destroy']);
         Route::get('teachers/{teacher}', [TeacherController::class, 'show']);
+        Route::get('sections/{section}/teachers', [TeacherController::class, 'teachersBySection']);
 
         Route::get('guardians', [GuardianController::class, 'index']);
         Route::post('guardians', [GuardianController::class, 'store']);
@@ -76,6 +84,10 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
         Route::post('rooms', [RoomController::class, 'store']);
         Route::post('rooms/{room}', [RoomController::class, 'update']);
         Route::delete('rooms/{room}', [RoomController::class, 'destroy']);
+        Route::get('sections/{section}/schedule', [SectionScheduleController::class, 'scheduleBysection']);
+
+        Route::post('sections/teachers', [SectionTeacherController::class, 'store']);
+        Route::delete('section/teacher', [SectionTeacherController::class, 'destroy']);
 
     });
 
