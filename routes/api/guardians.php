@@ -31,7 +31,7 @@ Route::middleware(['auth:sanctum', 'abilities:guardian'])
     Route::post('reports', [ReportController::class, 'store']);
 
     Route::get('courses', [CourseController::class, 'index']);
-    Route::get('courses', [CourseController::class, 'show']);
+    Route::get('courses/about', [CourseController::class, 'show']);
 
     Route::get('assignments', [AssignmentController::class, 'index']);
     Route::get('assignments/homepage', [AssignmentController::class, 'homePageIndex']);
