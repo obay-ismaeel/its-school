@@ -10,6 +10,11 @@ class Course extends Model
     use HasFactory;
     protected $hidden = ['created_at', 'updated_at'];
 
+    public function getImagePathAttribute($path)
+    {
+        return env('APP_URL') .':8000/storage/' . $path;
+    }
+
     public function grades()
     {
         return $this->belongsToMany(Grade::class, 'grade_courses');

@@ -62,6 +62,7 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
         Route::get('students/{student}', [StudentController::class, 'show']);
         Route::get('sections/{section}/students', [StudentController::class, 'studentsBySection']);
         Route::get('grades/{grade}/students', [StudentController::class, 'studentsByGrade']);
+        Route::get('student/top', [StudentController::class, 'topStudents']);
 
         Route::get('teachers', [TeacherController::class, 'index']);
         Route::post('teachers', [TeacherController::class, 'store']);

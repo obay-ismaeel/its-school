@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Student;
 use App\Traits\UserNameTrait;
 use App\Models\StudentAttendance;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
@@ -189,5 +190,32 @@ class StudentController extends Controller
             'message' => 'students for a grade',
             'students' => $grade->students
         ]);
+    }
+
+    public function topStudents()
+    {
+        $topStudents = DB::table('totals')
+        ->join('students', 'students.id', '=', 'totals.student_id')
+        ->select('student_id', DB::raw('avg(final_score) as total'))
+        ->groupBy('student_id')
+        ->orderBy('total', 'desc')
+        ->take(3)
+        ->get();
+
+        $topStudentsIds = $topStudents->pluck('student_id');
+
+        for($i = 0 ; $i < 3 ; $i++)
+        {
+            $student = Student::with(['grade', 'section'])->where('id', $topStudentsIds[$i])->first();
+            $student->setAttribute('total', $topStudents[$i]->total);
+            $students[] = collect($student);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'top 3 students',
+            'students' => $students
+        ]);
+
     }
 }

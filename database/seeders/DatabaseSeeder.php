@@ -222,6 +222,7 @@ class DatabaseSeeder extends Seeder
             }
 
             // Totals
+            Total::factory(50)->create();
             for($i = 13 ; $i < 19 ; $i++)
             {
                 Total::factory()->create([
