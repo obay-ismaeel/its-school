@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Grade;
 use App\Models\Section;
 use Illuminate\Http\Request;
 
@@ -51,4 +52,12 @@ class SectionController extends Controller
         ], 204);
     }
 
+    public function sectionsByGrade(Grade $grade)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => 'sections for a grade',
+            'sections' => $grade->sections()->withCount('students')->get()
+        ]);
+    }
 }

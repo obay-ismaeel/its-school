@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Grade;
 use App\Models\GuardianStudent;
 use App\Models\Section;
 use Illuminate\Http\Request;
@@ -157,7 +158,36 @@ class StudentController extends Controller
                                                 ->where('attended', true)->count(),
 
             'absence' => StudentAttendance::where('student_id', $student->id)
-                                            ->where('attended', false)->count()
+                                            ->where('attended', false)->count(),
+
+            'first_term_totals' => $student->totals()
+                                            ->where('year', now()->year)
+                                            ->with(['gradeCourse:id,course_id', 'gradeCourse.course:id,name'])
+                                            ->get(['id', 'grade_course_id', 'first_term_score']),
+
+            'second_term_totals' => $student->totals()
+                                            ->where('year', now()->year)
+                                            ->with(['gradeCourse:id,course_id', 'gradeCourse.course:id,name'])
+                                            ->get(['id', 'grade_course_id', 'second_term_score'])
+
+        ]);
+    }
+
+    public function studentsBySection(Section $section)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => 'students for a section',
+            'students' => $section->students
+        ]);
+    }
+
+    public function studentsByGrade(Grade $grade)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => 'students for a grade',
+            'students' => $grade->students
         ]);
     }
 }

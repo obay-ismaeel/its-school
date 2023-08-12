@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -120,4 +121,12 @@ class TeacherController extends Controller
         ]);
     }
 
+    public function teachersBySection(Section $section)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => 'teachers for a section',
+            'teachers' => $section->teachers()->where('is_principle', false)->get()
+        ]);
+    }
 }

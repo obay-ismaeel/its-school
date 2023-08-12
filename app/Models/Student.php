@@ -37,10 +37,13 @@ class Student extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
-    // public function getImageUrlAttribute($path)
-    // {
-    //     return env('APP_URL') .':8000/storage/' . $path;
-    // }
+    public function getImageUrlAttribute($path)
+    {
+        if(! filter_var($path, FILTER_VALIDATE_URL))
+        return env('APP_URL') .':8000/storage/' . $path;
+
+        return $path;
+    }
 
     public function grade()
     {

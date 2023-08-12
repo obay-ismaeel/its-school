@@ -16,6 +16,14 @@ class Teacher extends Authenticatable
         'password',
     ];
 
+    public function getImageUrlAttribute($path)
+    {
+        if(! filter_var($path, FILTER_VALIDATE_URL))
+        return env('APP_URL') .':8000/storage/' . $path;
+
+        return $path;
+    }
+
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
