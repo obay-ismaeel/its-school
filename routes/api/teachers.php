@@ -26,19 +26,26 @@ use PHPUnit\Framework\Attributes\PostCondition;
 Route::post('teachers/login', [TeacherController::class, 'login']);
 Route::middleware(['auth:sanctum', 'abilities:teacher'])
     ->prefix('teachers')->group(function(){
+
         Route::get('profile', [TeacherController::class, 'profile'])
             ->middleware(['auth:sanctum', 'abilities:teacher']);
         Route::get('logout', [TeacherController::class, 'logout']);
+
+        Route::get('schedule/days', [TeacherSchedule::class, 'getDays']);
         Route::get('schedule', [TeacherSchedule::class, 'index']);
-        Route::get('sections/{section}/students', [StudentController::class, 'bySection']);
+
         Route::get('grades', [TeacherGradesController::class, 'index']);
         Route::get('grades/{grade}/sections', [TeacherGradesController::class, 'sections']);
+
         Route::post('attendance', [AttendanceController::class, 'store']);
+
         Route::post('assignments', [AssignmentController::class, 'store']);
-        Route::post('students/{student}/marks', [MarkController::class, 'teacherStore']);
+
         Route::get('sections/{section}/courses', [GradeController::class, 'teacherIndex']);
-        Route::get('schedule/days', [TeacherSchedule::class, 'getDays']);
+        Route::get('sections/{section}/students', [StudentController::class, 'bySection']);
+
         Route::post('students/{student}/marks', [MarkController::class, 'teacherStore']);
         Route::get('marks/types', [MarkController::class, 'getTypes']);
+
         Route::post('posts', [PostController::class, 'store']);
     });

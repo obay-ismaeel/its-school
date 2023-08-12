@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\GuardianController;
+use App\Http\Controllers\Api\RoomController;
 use App\Models\GradeCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -70,5 +71,11 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
         Route::get('guardians/{guardian}', [GuardianController::class, 'show']);
 
         Route::get('homepage', [AdminController::class, 'homePage']);
+
+        Route::get('rooms', [RoomController::class, 'index']);
+        Route::post('rooms', [RoomController::class, 'store']);
+        Route::post('rooms/{room}', [RoomController::class, 'update']);
+        Route::delete('rooms/{room}', [RoomController::class, 'destroy']);
+
     });
 
