@@ -27,7 +27,7 @@ class CourseController extends Controller
         ]);
     }
 
-    public function show(Request $request, $courseId)
+    public function show(Request $request)
     {
         if(! Auth::user()->section_id){
             $request->validate([
@@ -35,13 +35,17 @@ class CourseController extends Controller
             ]);
         }
 
+        $request->validate([
+            'course_id' => 'required|exists:courses,id'
+        ]);
+
         $gradeId = Student::find($request->student_id ? $request->student_id : Auth::id())
                             ->section->grade->id;
 
         $teacher = Student::find($request->student_id ? $request->student_id : Auth::id())
-                            ->section->teachers()->where('course_id', $courseId)->first(['teachers.id', 'first_name', 'last_name']);
+                            ->section->teachers()->where('course_id', $request->course_id)->first(['teachers.id', 'first_name', 'last_name']);
 
-        $information = GradeCourse::where('course_id', $courseId)->where('grade_id', $gradeId)->first();
+        $information = GradeCourse::where('course_id', $request->course_id)->where('grade_id', $gradeId)->first();
         //$about = collect([$teacher, $information])->all();
 
         return response()->json([
