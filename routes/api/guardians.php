@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum', 'abilities:guardian'])
 
     Route::get('marks', [MarkController::class, 'index']);
     Route::get('totals', [MarkController::class, 'total']);
+    Route::get('years', [MarkController::class, 'getYears']);
 
     Route::get('schedules', [SectionScheduleController::class , 'index']);
     Route::get('examschedule', [ExamScheduleController::class, 'index']);
@@ -48,7 +49,6 @@ Route::middleware(['auth:sanctum', 'abilities:guardian'])
 
     Route::get('children', [GuardianController::class, 'getChildren']);
 
-    Route::get('years', [MarkController::class, 'getYears']);
 
     });
 

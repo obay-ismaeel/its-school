@@ -29,6 +29,15 @@ class CourseGradeController extends Controller
             'lower_mark' => 'required'
         ]);
 
+        $check = GradeCourse::where('grade_id', $attributes['grade_id'])->where('course_id', $attributes['course_id']);
+
+        if($check->exists()){
+            return response()->json([
+                'status' => false,
+                'message' => 'Already exist',
+            ], 400);
+        }
+
         $gradeCourse = GradeCourse::create($attributes);
 
         return response()->json([

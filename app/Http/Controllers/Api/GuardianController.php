@@ -115,7 +115,7 @@ class GuardianController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Guardain profile',
-            'guardian' => Guardian::with('children')->find($guardian->id)
+            'guardian' => Guardian::with(['children.section', 'children.grade'])->find($guardian->id)
         ]);
     }
 

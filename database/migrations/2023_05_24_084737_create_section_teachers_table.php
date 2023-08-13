@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('section_teachers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();;
-            $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();;
+            $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();
+            $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();
             //!$table->foreignId('grade_course_id')->constrained('grade_courses');
 
             $table->unique(['section_id','teacher_id']); // replace grade_course_id with teacher id here

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Teacher;
+use App\Models\TeacherAttendance;
 use App\Traits\UserNameTrait;
 
 class TeacherController extends Controller
@@ -117,7 +118,9 @@ class TeacherController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Teacher profile',
-            'teacher' => Teacher::with('course')->find($teacher->id)
+            'teacher' => Teacher::with('course')->find($teacher->id),
+            'attendance' => TeacherAttendance::where('teacher_id', $teacher->id)->where('attended', true)->count(),
+            'absence' => TeacherAttendance::where('teacher_id', $teacher->id)->where('attended', false)->count()
         ]);
     }
 

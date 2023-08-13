@@ -206,7 +206,7 @@ class DatabaseSeeder extends Seeder
 
             // Schedule
             $days = ['sunday','monday','tuesday','wednesday','thursday'];
-            for($i = 1 ; $i < Section::count() ; $i++)
+            for($i = 1 ; $i <= Section::count() ; $i++)
             {
                 for($j = 0 ; $j < 5 ; $j++)
                 {

@@ -15,6 +15,15 @@ class SectionTeacherController extends Controller
             'teacher_id' => 'required|exists:teachers,id'
         ]);
 
+        $check = SectionTeacher::where('section_id', $attributes['section_id'])->where('teacher_id', $attributes['teacher_id']);
+
+        if($check->exists()){
+            return response()->json([
+                'status' => false,
+                'message' => 'Already exist',
+            ], 400);
+        }
+
         $data = SectionTeacher::create($attributes);
 
         return response()->json([
