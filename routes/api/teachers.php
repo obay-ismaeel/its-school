@@ -29,7 +29,7 @@ Route::middleware(['auth:sanctum', 'abilities:teacher'])
 
         Route::get('profile', [TeacherController::class, 'profile'])
             ->middleware(['auth:sanctum', 'abilities:teacher']);
-        Route::get('logout', [TeacherController::class, 'logout']);
+        Route::post('logout', [TeacherController::class, 'logout']);
 
         Route::get('schedule/days', [TeacherSchedule::class, 'getDays']);
         Route::get('schedule', [TeacherSchedule::class, 'index']);

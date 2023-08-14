@@ -40,6 +40,18 @@ class AdminController extends Controller
         ]);
     }
 
+    public function logout(Request $request)
+    {
+        $token = $request->user()->tokens();
+
+        $token->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'admin logged out successfully'
+        ]);
+    }
+
     public function profile()
     {
         return response() -> json([

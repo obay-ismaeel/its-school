@@ -27,6 +27,7 @@ Route::post('guardians/login', [GuardianController::class, 'login']);
 Route::middleware(['auth:sanctum', 'abilities:guardian'])
     ->prefix('guardians')->group(function(){
     Route::get('profile', [GuardianController::class, 'profile']);
+    Route::post('logout', [GuardianController::class, 'logout']);
 
     Route::post('reports', [ReportController::class, 'store']);
 

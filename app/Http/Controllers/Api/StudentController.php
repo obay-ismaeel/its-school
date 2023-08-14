@@ -43,6 +43,18 @@ class StudentController extends Controller
         ]);
     }
 
+    public function logout(Request $request)
+    {
+        $token = $request->user()->tokens();
+
+        $token->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'student logged out successfully'
+        ]);
+    }
+
     public function profile()
     {
         return response() -> json([

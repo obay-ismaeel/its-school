@@ -32,6 +32,7 @@ Route::post('admins/login', [AdminController::class, 'login']);
 Route::middleware(['auth:sanctum', 'abilities:admin'])
     ->prefix('admins')->group(function(){
         Route::get('profile', [AdminController::class, 'profile']);
+        Route::post('logout', [AdminController::class, 'logout']);
 
         Route::get('courses', [CourseController::class, 'webIndex']);
         Route::post('courses', [CourseController::class, 'store']);

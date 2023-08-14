@@ -27,6 +27,7 @@ Route::post('students/login', [StudentController::class, 'login']);
 Route::middleware(['auth:sanctum', 'abilities:student'])
     ->prefix('students')->group(function(){
     Route::get('profile', [StudentController::class, 'profile']);
+    Route::post('logout', [StudentController::class, 'logout']);
 
     Route::get('courses', [CourseController::class, 'index']);
     Route::get('courses/about', [CourseController::class, 'show']);
