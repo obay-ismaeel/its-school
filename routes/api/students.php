@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AlertController;
 use App\Http\Controllers\Api\AssignmentController;
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\CourseController;
@@ -45,5 +46,7 @@ Route::middleware(['auth:sanctum', 'abilities:student'])
     Route::get('schedules', [SectionScheduleController::class , 'index']);
     Route::get('examschedule', [ExamScheduleController::class, 'index']);
     Route::get('attendances', [AttendanceController::class, 'attendanceCount']);
+
+    Route::get('alerts', [AlertController::class, 'index']);
 
 });

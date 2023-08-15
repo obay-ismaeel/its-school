@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\TeacherGradesController;
 use App\Http\Controllers\Api\TeacherSchedule;
+use App\Http\Controllers\Api\AlertController;
 use PHPUnit\Framework\Attributes\PostCondition;
 
 /*
@@ -48,4 +49,7 @@ Route::middleware(['auth:sanctum', 'abilities:teacher'])
         Route::get('marks/types', [MarkController::class, 'getTypes']);
 
         Route::post('posts', [PostController::class, 'store']);
+
+        Route::post('alerts', [AlertController::class, 'store']);
+
     });

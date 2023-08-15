@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class AlertsFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'student_id' => Student::inRandomOrder()->first()->id,
+            'teacher_id' => Teacher::inRandomOrder()->first()->id,
+            'title' => fake()->sentence(),
+            'content' => fake()->text()
         ];
     }
 }

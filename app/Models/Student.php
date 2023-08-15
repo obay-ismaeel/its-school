@@ -77,7 +77,7 @@ class Student extends Authenticatable
 
     public function alerts()
     {
-        return $this->hasMany(Alert::class, 'student_id');
+        return $this->hasMany(Alerts::class, 'student_id');
     }
 
     public function guardiansReports()

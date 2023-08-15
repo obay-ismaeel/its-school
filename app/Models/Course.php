@@ -15,6 +15,14 @@ class Course extends Model
         return env('APP_URL') .':8000/storage/' . $path;
     }
 
+    public function getNameAttribute($name)
+    {
+        if(strlen($name) > 10)
+            return substr($name, 0, 4);
+
+        return $name;
+    }
+
     public function grades()
     {
         return $this->belongsToMany(Grade::class, 'grade_courses');
