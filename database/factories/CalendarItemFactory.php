@@ -17,7 +17,10 @@ class CalendarItemFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'date' => fake()->dateTime(),
+            'title' => fake()->sentence(),
+            'content' => fake()->text(),
+            'type' => fake()->randomElement(['meeting','holiday','event'])
         ];
     }
 }

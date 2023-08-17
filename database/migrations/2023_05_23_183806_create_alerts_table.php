@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('alerts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();;
-            $table->foreignId('teacher_id')->constrained()->cascadeOnDelete();;
+            $table->foreignId('teacher_id')->nullable()->constrained()->cascadeOnDelete();;
 
             $table->string('title');
             $table->text('content');

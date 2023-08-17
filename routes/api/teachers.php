@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\TeacherGradesController;
 use App\Http\Controllers\Api\TeacherSchedule;
 use App\Models\Mark;
+use App\Http\Controllers\Api\AlertController;
 use PHPUnit\Framework\Attributes\PostCondition;
 
 /*
@@ -58,4 +59,5 @@ Route::middleware(['auth:sanctum', 'abilities:teacher'])
         Route::get('grades/{grade}/posts', [PostController::class, 'byGrade']);
         Route::delete('posts/{post}', [PostController::class, 'destroy']);
 
+        Route::post('alerts', [AlertController::class, 'store']);
     });

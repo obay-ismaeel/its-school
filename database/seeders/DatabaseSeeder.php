@@ -5,9 +5,11 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
+use App\Models\Alerts;
 use App\Models\Assignment;
 use App\Models\AssignmentStudent;
 use App\Models\Attachment;
+use App\Models\CalendarItem;
 use App\Models\Teacher;
 use App\Models\Student;
 use App\Models\Guardian;
@@ -24,6 +26,7 @@ use App\Models\SectionSchedule;
 use App\Models\SectionTeacher;
 use App\Models\StudentAttendance;
 use App\Models\Total;
+use Illuminate\Console\View\Components\Alert;
 
 class DatabaseSeeder extends Seeder
 {
@@ -252,5 +255,12 @@ class DatabaseSeeder extends Seeder
                     'grade_course_id' => $i
                 ]);
             }
+
+            // Calendar items
+            CalendarItem::factory(20)->create();
+
+            // Alerts
+            Alerts::factory(20)->create();
+
     }
 }

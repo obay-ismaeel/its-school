@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\AlertController;
+use App\Http\Controllers\Api\CalendarController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\CourseGradeController;
 use App\Http\Controllers\Api\GradeController;
@@ -80,6 +82,8 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
         Route::get('guardians/{guardian}', [GuardianController::class, 'show']);
 
         Route::get('homepage', [AdminController::class, 'homePage']);
+        Route::get('percentages', [AdminController::class, 'percentages']);
+        Route::get('statistics', [AdminController::class, 'statistics']);
 
         Route::get('rooms', [RoomController::class, 'index']);
         Route::post('rooms', [RoomController::class, 'store']);
@@ -89,6 +93,13 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
 
         Route::post('sections/teachers', [SectionTeacherController::class, 'store']);
         Route::delete('section/teacher', [SectionTeacherController::class, 'destroy']);
+
+        Route::post('calendaritems', [CalendarController::class, 'store']);
+
+        Route::post('schedule/generate', [SectionScheduleController::class, 'autoGenerate']);
+
+        Route::post('alerts', [AlertController::class, 'store']);
+
 
     });
 

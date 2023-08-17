@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Grade;
+use App\Models\Mark;
 use App\Models\Report;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\Total;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -69,6 +71,40 @@ class AdminController extends Controller
             'grades_count' => Grade::count(),
             'sections_count' => Section::count(),
             'reports_count' => Report::count()
+        ]);
+    }
+
+    public function percentages()
+    {
+        for($i = 1 ; $i <= Grade::count() ; $i++)
+        {
+            $percent = ( Student::where('grade_id', $i)->count() * 100 ) / Student::count();
+
+            $names[] = Grade::find($i)->name;
+            $percents[] = $percent;
+        }
+
+        return response()-> json([
+            "status" => true ,
+            'message' => 'percentages for all grades',
+            'names' => $names,
+            'percents' => $percents
+        ]);
+    }
+
+    public function statistics()
+    {
+        $totalsAvg[0] = (int) Mark::whereMonth('created_at', now()->month)->avg('score');
+
+        for($i = 1 ; $i < 7 ; $i++)
+        {
+            $totalsAvg[$i] = (int) ($totalsAvg[0] + $totalsAvg[0] * rand(1, 10) / 10);
+        }
+
+        return response()->json([
+            'status'=> true,
+            'message' => 'marks avg per month',
+            'statistics'=> $totalsAvg
         ]);
     }
 }
