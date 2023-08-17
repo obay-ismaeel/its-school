@@ -82,6 +82,8 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
         Route::get('guardians/{guardian}', [GuardianController::class, 'show']);
 
         Route::get('homepage', [AdminController::class, 'homePage']);
+        Route::get('percentages', [AdminController::class, 'percentages']);
+        Route::get('statistics', [AdminController::class, 'statistics']);
 
         Route::get('rooms', [RoomController::class, 'index']);
         Route::post('rooms', [RoomController::class, 'store']);
@@ -97,6 +99,7 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
         Route::post('schedule/generate', [SectionScheduleController::class, 'autoGenerate']);
 
         Route::post('alerts', [AlertController::class, 'store']);
+
 
     });
 
