@@ -35,7 +35,7 @@ class TeacherController extends Controller
         return response() -> json([
             'status' => true,
             'message' => 'login success',
-            'is_principle' => $teacher->is_principle,
+            'is_principle' => (bool)$teacher->is_principle,
             'token' => $teacher -> createToken('authToken', ['teacher']) -> plainTextToken
         ]);
     }
@@ -142,6 +142,28 @@ class TeacherController extends Controller
             'status' => true,
             'message' => 'teachers for a section',
             'teachers' => $section->teachers()->where('is_principle', false)->get()
+        ]);
+    }
+
+    public function notPrincipleIndex() {
+        $teachers = Teacher::where('is_principle', 0)->orderBy('first_name')->get();
+
+        $teachers = $teachers->map(function($teacher){
+            $count = $teacher->attendance->where('attended',0)->count();
+
+            $today = $teacher->attendance->where('date', date('Y-m-d', strtotime(now())))->first();
+
+            return $teacher
+                ->setAttribute('absence', $count)
+                ->setAttribute('today_attendance', $today ? (bool)$today->attended : false);
+        });
+
+        $checked = $teachers->first()->attendance->where('date', date('Y-m-d', strtotime(now())));
+
+        return response()->json([
+            'message' => 'success',
+            'checked' => !$checked->isEmpty(),
+            'data' => $teachers->makeHidden(['attendance'])
         ]);
     }
 }
