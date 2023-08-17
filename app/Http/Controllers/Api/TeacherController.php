@@ -144,4 +144,20 @@ class TeacherController extends Controller
             'teachers' => $section->teachers()->where('is_principle', false)->get()
         ]);
     }
+
+    // Students and guardians
+    public function mobileShow(Request $request, Teacher $teacher)
+    {
+        if(! Auth::user()->section_id){
+            $request->validate([
+                'student_id' => 'required'
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Teacher profile',
+            'teacher' => Teacher::with('course')->find($teacher->id)
+        ]);
+    }
 }

@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum', 'abilities:teacher'])
         Route::get('marks/types', [MarkController::class, 'getTypes']);
 
         Route::post('posts', [PostController::class, 'store']);
+        Route::delete('posts/{post}', [PostController::class, 'destroy']);
 
         Route::post('alerts', [AlertController::class, 'store']);
 

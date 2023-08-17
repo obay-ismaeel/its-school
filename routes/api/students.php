@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ExamScheduleController;
 use App\Http\Controllers\Api\MarkController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\SectionScheduleController;
+use App\Http\Controllers\Api\TeacherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StudentController;
@@ -48,5 +49,6 @@ Route::middleware(['auth:sanctum', 'abilities:student'])
     Route::get('attendances', [AttendanceController::class, 'attendanceCount']);
 
     Route::get('alerts', [AlertController::class, 'index']);
+    Route::get('teachers/{teacher}', [TeacherController::class, 'mobileShow']);
 
 });

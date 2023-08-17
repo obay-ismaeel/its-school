@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\SectionScheduleController;
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\ExamScheduleController;
 use App\Http\Controllers\Api\AlertController;
+use App\Http\Controllers\Api\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,7 @@ Route::middleware(['auth:sanctum', 'abilities:guardian'])
     Route::get('children', [GuardianController::class, 'getChildren']);
 
     Route::get('alerts', [AlertController::class, 'index']);
+    Route::get('teachers/{teacher}', [TeacherController::class, 'mobileShow']);
 
     });
 
