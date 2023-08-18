@@ -142,13 +142,37 @@ class MarkController extends Controller
 
         $mark = Mark::updateOrCreate(
             [
-                'student_id'=>$student->id,
+                'student_id'=> $student->id,
                 'grade_course_id' => $grade_course->id,
                 'type' => $request['type'],
                 'term' => $term,
                 'year' => $year
             ],
             [ 'score' => $request['score'] ]
+        );
+
+        $firstTermScore = Mark::where('student_id', $student->id)
+                                ->where('grade_course_id', $grade_course->id)
+                                ->where('term', 'first')->avg('score');
+
+        $secondTermScore = Mark::where('student_id', $student->id)
+                                ->where('grade_course_id', $grade_course->id)
+                                ->where('term', 'second')->avg('score');
+
+        $finalScore = ($firstTermScore + $secondTermScore) / 2;
+
+        Total::updateOrCreate(
+            [
+                'student_id' => $student->id,
+                'grade_course_id' => $grade_course->id,
+                'year' => $year
+            ],
+            [
+                'first_term_score' => $firstTermScore ?? 0,
+                'second_term_score' => $secondTermScore ?? 0,
+                'final_score' => $finalScore,
+                'has_failed' => $finalScore < $grade_course->lower_mark ? true : false
+            ]
         );
 
         return response()->json([
