@@ -19,13 +19,16 @@ use App\Models\Course;
 use App\Models\ExamSchedule;
 use App\Models\GradeCourse;
 use App\Models\GuardianStudent;
+use App\Models\Line;
 use App\Models\Mark;
 use App\Models\Post;
 use App\Models\Report;
 use App\Models\SectionSchedule;
 use App\Models\SectionTeacher;
 use App\Models\StudentAttendance;
+use App\Models\StudentTrip;
 use App\Models\Total;
+use App\Models\Trip;
 use Illuminate\Console\View\Components\Alert;
 
 class DatabaseSeeder extends Seeder
@@ -265,6 +268,23 @@ class DatabaseSeeder extends Seeder
 
             // Alerts
             Alerts::factory(20)->create();
+
+            // Lines
+            Line::factory(4)->create();
+
+            // Trips
+            for($i=1 ; $i <= Line::count() ; $i++){
+                Trip::factory(3)->create([
+                    'line_id' => $i
+                ]);
+            }
+
+            // Students Trips
+            StudentTrip::factory(20)->create();
+            StudentTrip::factory()->create([
+                'student_id' => 91,
+                'trip_id' => 1
+            ]);
 
     }
 }

@@ -89,9 +89,17 @@ class CourseController extends Controller
 
     public function update(Request $request, Course $course)
     {
+        if($request->hasFile('image_path'))
+        {
+            $path = $request->file('image_path')->store('courses');
+            $course->update([
+                'image_path' => $path
+            ]);
+        }
+
         $course->update([
             'name' => $request->name ? $request->name : $course->name,
-            'description' => $request->description ? $request->description : $course->description
+            'description' => $request->description ? $request->description : $course->description,
         ]);
 
         return response()->json([

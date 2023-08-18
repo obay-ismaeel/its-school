@@ -90,4 +90,8 @@ class Student extends Authenticatable
         return $this->belongsToMany(Assignment::class, 'assignment_students');
     }
 
+    public function studentTrip()
+    {
+        return $this-> hasMany(StudentTrip::class, 'student_id');
+    }
 }

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Student;
 use App\Traits\UserNameTrait;
 use App\Models\StudentAttendance;
+use App\Models\StudentTrip;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -194,7 +195,9 @@ class StudentController extends Controller
             'second_term_totals' => $student->totals()
                                             ->where('year', now()->year)
                                             ->with(['gradeCourse:id,course_id', 'gradeCourse.course:id,name'])
-                                            ->get(['id', 'grade_course_id', 'second_term_score'])
+                                            ->get(['id', 'grade_course_id', 'second_term_score']),
+
+            'student_trip' => StudentTrip::where('student_id', $student->id)->first()->trip->name
 
         ]);
     }
