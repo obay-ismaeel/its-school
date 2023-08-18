@@ -71,7 +71,7 @@ class RoomController extends Controller
         $maxRoomsCapacity = $rooms->sum('capacity');
 
         if( $maxGradeCount > $maxRoomsCapacity )
-            return response()->json(['message'=>'The Rooms Capacity is not enough!', 'needed'=>$maxGradeCount-$maxRoomsCapacity], 400);
+            return response()->json(['status'=>false, 'message'=>'The Rooms Capacity is not enough!', 'needed'=>$maxGradeCount-$maxRoomsCapacity]);
 
         if( ExamCard::all()->isNotEmpty() ) ExamCard::truncate();
 
@@ -98,6 +98,6 @@ class RoomController extends Controller
             $roomIndex = 0; $num = 0; $filled = 0;
         }
 
-        return response()->json(['message' => 'Students are Assigned to Rooms Successfully!']);
+        return response()->json(['status' => true, 'message' => 'Students are Assigned to Rooms Successfully!']);
     }
 }
