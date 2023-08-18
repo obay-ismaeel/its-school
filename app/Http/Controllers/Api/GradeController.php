@@ -72,7 +72,7 @@ class GradeController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'data' => $courses
+            'data' => [$courses]
         ]);
     }
 
