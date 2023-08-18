@@ -56,28 +56,40 @@ class StudentController extends Controller
         ]);
     }
 
-    public function profile()
+    public function profile(Student $student)
     {
+        if(!$student->id) $student = Student::find(Auth::id());
+
         return response() -> json([
             'status' => true,
             'message' => 'Student profile',
-            'profile' => Auth::user(),
-            'section' => Student::find(Auth::id())->section,
-            'grade' => Student::find(Auth::id())->grade
+            'profile' => $student->makeHidden(['section','grade']),
+            'section' => $student->section,
+            'grade' => $student->grade
         ]);
     }
 
     //get students by section
 
     public function bySection(Section $section) {
-        $students = Student::where('section_id', $section->id)->get();
+        $students = Student::where('section_id', $section->id)->orderBy('first_name')->get();
+
         $students = $students->map( function($student){
             $absence = $student->attendance->where('attended',0)->count();
-            return $student->setAttribute('absence', $absence);
+
+            $today = $student->attendance->where('date', date('Y-m-d', strtotime(now())))->first();
+
+            return $student
+                ->setAttribute('absence', $absence)
+                ->setAttribute('today_attendance', $today ? (bool)$today->attended : false);
         } );
+
+        $checked = $students->first()->attendance->where('date', date('Y-m-d', strtotime(now())));
+
         return response()->json([
             'message'=>'success',
-            'data'=> $students
+            'checked' => !$checked->isEmpty(),
+            'data'=> $students->makeHidden(['attendance'])
         ]);
     }
 

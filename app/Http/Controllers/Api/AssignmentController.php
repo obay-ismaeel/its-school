@@ -124,4 +124,13 @@ class AssignmentController extends Controller
             'data'=>$assignments
         ]);
     }
+
+    public function bySection(Section $section) {
+        $assignments = $section->assignments->orderBy('due');
+
+        return response()->json([
+            'message' => 'success',
+            'data' => $assignments
+        ]);
+    }
 }

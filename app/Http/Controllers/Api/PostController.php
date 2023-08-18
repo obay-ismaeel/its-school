@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attachment;
+use App\Models\Grade;
 use App\Models\Student;
 use App\Models\Post;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -23,7 +25,7 @@ class PostController extends Controller
         $gradeId = Student::find($request->student_id ? $request->student_id : Auth::id())->section->grade->id;
 
         //I changed it for testing
-        $posts = Post::with(['teacher.course:id,name', 'attachments'])->get();
+        $posts = Post::with(['teacher.course:id,name', 'attachments'])->latest()->get();
 
         // $posts = $posts->where('grade_id', $gradeId);
 
@@ -40,11 +42,9 @@ class PostController extends Controller
             'content' => 'required',
             'type' => 'required',
             'grade_id' => 'required|exists:grades,id',
-            'files' => 'required|array',  // Add validation for the 'files' field
             'files.*' => 'file'
         ]);
 
-        //dd($request);
         $teacher = Teacher::find(Auth::user()->id);
 
         $post = Post::create([
@@ -55,10 +55,7 @@ class PostController extends Controller
             'type' => $request['type']
         ]);
 
-        // !!! CORRECT THE TYPE OF THE ATTACHMENT !!!
-
         foreach($request['files'] as $file){
-            error_log('hello');
             Attachment::create([
                 'post_id' => $post->id,
                 'file_url' => '/storage/' . $file->store('posts'),
@@ -72,12 +69,24 @@ class PostController extends Controller
         ]);
     }
 
-    public function destroy(Post $post)
-    {
-        $post->delete();
+    public function byGrade(Grade $grade){
+        $posts = $grade->posts->sortByDesc('created_at')->load(['teacher.course', 'attachments']);
+
         return response()->json([
-            'message' => 'post has deleted successfully',
-            'post' => null
-        ], 204);
+            'message' => 'success',
+            'data' => $posts
+        ]);
     }
+
+    function destroy(Post $post) {
+        if( ! Auth::user()->is_principle && $post['teacher_id'] != Auth::id() )
+            return response()->json([ 'message' => 'it is not your post fool' ], 401);
+
+        $post->delete();
+
+        return response()->json([
+            'message' => 'deleted successfully!',
+        ]);
+    }
+
 }

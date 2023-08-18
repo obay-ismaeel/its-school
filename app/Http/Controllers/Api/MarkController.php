@@ -88,6 +88,39 @@ class MarkController extends Controller
         ]);
     }
 
+    public function getMark(Request $request, Student $student) {
+        $attributes = $request->validate([
+            'course_id' => 'required',
+            'type' => 'required'
+        ]);
+
+        $grade_course = GradeCourse::where('grade_id', $student->section->grade->id )
+        ->where('course_id', $request['course_id'])
+        ->first();
+
+        $current_month = (int)date('m', strtotime(now()));
+
+        $term = $current_month > 8 && $current_month < 2 ? 'first' : 'second';
+
+        $year = $current_month > 8 ? date('Y', strtotime(now()))+1 : date('Y', strtotime(now()));
+
+        $mark = Mark::where([
+            ['grade_course_id', $grade_course->id ],
+            ['student_id', $student->id ],
+            ['type', $attributes['type'] ],
+            ['term', $term ],
+            ['year', $year ]
+        ])->first();
+
+        if(!$mark) $message = 'No score yet!';
+        else $message = 'Mark retrieved';
+
+        return response()->json([
+            'message' => $message,
+            'mark' => $mark->score ?? null
+        ]);
+    }
+
     // Teacher
     public function teacherStore(Request $request, Student $student) {
 
