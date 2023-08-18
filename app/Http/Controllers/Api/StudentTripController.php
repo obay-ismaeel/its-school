@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\StudentTrip;
+use App\Models\Trip;
 use Illuminate\Http\Request;
 
 class StudentTripController extends Controller
@@ -22,7 +23,7 @@ class StudentTripController extends Controller
             ]);
         }
 
-        $tripCapacity = StudentTrip::find($attributes['trip_id'])->capacity;
+        $tripCapacity = Trip::find($attributes['trip_id'])->capacity;
         $tripStudentsCount = StudentTrip::where('trip_id', $attributes['trip_id'])->count();
 
         if($tripStudentsCount >= $tripCapacity){
@@ -40,21 +41,6 @@ class StudentTripController extends Controller
             'student_trip' =>  $data
         ], 201);
 
-    }
-
-    public function destroy(Request $request)
-    {
-        $request->validate([
-            'student_id' => 'required|exists:students,id'
-        ]);
-
-        StudentTrip::find($request->student_id)->delete();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Students has deleted from the trip successfully',
-            'data' =>  null
-        ], 204);
     }
 
 }

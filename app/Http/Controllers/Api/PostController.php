@@ -42,7 +42,7 @@ class PostController extends Controller
             'content' => 'required',
             'type' => 'required',
             'grade_id' => 'required|exists:grades,id',
-            'files.*' => 'file'
+            'files.*' => 'image'
         ]);
 
         $teacher = Teacher::find(Auth::user()->id);
@@ -74,7 +74,7 @@ class PostController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'data' => $posts
+            'data' => $posts->values()
         ]);
     }
 

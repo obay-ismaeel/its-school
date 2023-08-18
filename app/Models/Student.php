@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -92,6 +93,11 @@ class Student extends Authenticatable
 
     public function studentTrip()
     {
-        return $this-> hasMany(StudentTrip::class, 'student_id');
+        return $this-> hasOne(StudentTrip::class, 'student_id');
     }
+
+    public function card() {
+        return $this->hasOne(ExamCard::class, 'student_id');
+    }
+
 }

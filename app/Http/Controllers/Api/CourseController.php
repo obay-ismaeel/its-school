@@ -43,7 +43,7 @@ class CourseController extends Controller
                             ->section->grade->id;
 
         $teacher = Student::find($request->student_id ? $request->student_id : Auth::id())
-                            ->section->teachers()->where('course_id', $request->course_id)->first(['teachers.id', 'first_name', 'last_name']);
+                            ->section->teachers()->where('course_id', $request->course_id)->first(['teachers.id', 'first_name', 'last_name', 'image_url']);
 
         $information = GradeCourse::with('course:id,name,image_path')
                                     ->where('course_id', $request->course_id)

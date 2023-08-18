@@ -34,7 +34,7 @@ class LineController extends Controller
         ], 201);
     }
 
-    public function delete(Line $line)
+    public function destroy(Line $line)
     {
         $line->delete();
 

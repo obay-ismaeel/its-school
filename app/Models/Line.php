@@ -11,6 +11,6 @@ class Line extends Model
 
     public function trips()
     {
-        return $this->hasMany(Line::class, 'line_id');
+        return $this->hasMany(Trip::class, 'line_id');
     }
 }
