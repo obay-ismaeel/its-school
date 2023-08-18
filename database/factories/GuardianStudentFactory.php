@@ -19,7 +19,7 @@ class GuardianStudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'student_id' => Student::inRandomOrder()->first()->id,
+            'student_id' => fake()->unique()->numberBetween(1, 89),
             'guardian_id' => Guardian::inRandomOrder()->first()->id
         ];
     }
