@@ -41,7 +41,7 @@ class Student extends Authenticatable
     public function getImageUrlAttribute($path)
     {
         if(! filter_var($path, FILTER_VALIDATE_URL))
-        return env('APP_URL') .':8000/storage/' . $path;
+            return env('DOMAIN') .'/storage/' . $path;
 
         return $path;
     }

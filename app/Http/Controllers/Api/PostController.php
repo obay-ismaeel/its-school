@@ -25,7 +25,8 @@ class PostController extends Controller
         $gradeId = Student::find($request->student_id ? $request->student_id : Auth::id())->section->grade->id;
 
         //I changed it for testing
-        $posts = Post::with(['teacher.course:id,name', 'attachments'])->latest()->get();
+        $posts = Post::where('grade_id', $gradeId)
+        ->with(['teacher.course:id,name', 'attachments'])->latest()->get();
 
         // $posts = $posts->where('grade_id', $gradeId);
 
@@ -59,7 +60,7 @@ class PostController extends Controller
             foreach($request['files'] as $file){
                 Attachment::create([
                     'post_id' => $post->id,
-                    'file_url' => '/storage/' . $file->store('posts'),
+                    'file_url' => $file->store('posts'),
                     'type' => 'image'
                 ]);
             }
