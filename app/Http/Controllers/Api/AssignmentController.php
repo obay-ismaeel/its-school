@@ -104,11 +104,11 @@ class AssignmentController extends Controller
 
         $assignments=[];
         foreach($request['sections'] as $section){
-            $grade_course =
-            GradeCourse::where('grade_id', Section::find($section['id'])->grade->id )
+            $grade_course = GradeCourse::where('grade_id', Section::find($section['id'])->grade->id )
             ->where('course_id', $teacher->course->id)
             ->first();
-            $assignments[] = Assignment::create([
+
+            $assignment = Assignment::create([
                 'teacher_id' => $teacher->id,
                 'section_id' => $section['id'],
                 'grade_course_id' => $grade_course->id,
@@ -117,11 +117,22 @@ class AssignmentController extends Controller
                 'due_date' => $request['due_date'],
                 'type' => $request['type']
             ]);
+
+            $assignments[] = $assignment;
+
+            if($students = Student::where('section_id',$section['id'])->get()){
+                foreach($students as $student){
+                    AssignmentStudent::create([
+                        'student_id' => $student->id,
+                        'assignment_id' => $assignment->id,
+                    ]);
+                }
+            }
         }
 
         return response()->json([
             'message' => 'success',
-            'data'=>$assignments
+            'data' => $assignments
         ]);
     }
 
