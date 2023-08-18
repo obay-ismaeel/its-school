@@ -14,6 +14,7 @@ use App\Traits\UserNameTrait;
 use App\Models\StudentAttendance;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class StudentController extends Controller
 {
@@ -228,6 +229,16 @@ class StudentController extends Controller
             'message' => 'top 3 students',
             'students' => $students
         ]);
-
     }
+
+        // Show guardian's children
+        public function mobileShow(Student $student)
+        {
+            return response()->json([
+                'status' => true,
+                'message' => 'show student',
+                'student' => Student::with(['grade', 'section'])->find($student->id)
+            ]);
+        }
+
 }

@@ -243,8 +243,12 @@ class DatabaseSeeder extends Seeder
 
             // Guardian_Student
             GuardianStudent::factory(20)->create();
-            GuardianStudent::factory(2)->create([
-                'student_id' => mt_rand(1, 40),
+            GuardianStudent::factory()->create([
+                'student_id' => 90,
+                'guardian_id' => 1
+            ]);
+            GuardianStudent::factory()->create([
+                'student_id' => 91,
                 'guardian_id' => 1
             ]);
 
