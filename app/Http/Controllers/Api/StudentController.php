@@ -202,7 +202,9 @@ class StudentController extends Controller
             'second_term_totals' => $student->totals()
                                             ->where('year', now()->year)
                                             ->with(['gradeCourse:id,course_id', 'gradeCourse.course:id,name'])
-                                            ->get(['id', 'grade_course_id', 'second_term_score'])
+                                            ->get(['id', 'grade_course_id', 'second_term_score']),
+            'card_number' => $student->card->number ?? 'None',
+            'room' => $student->card->room->name ?? 'None'
 
         ]);
     }
@@ -257,7 +259,9 @@ class StudentController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'show student',
-                'student' => Student::with(['grade', 'section'])->find($student->id)
+                'student' => $student = Student::with(['grade', 'section'])->find($student->id),
+                'card_number' => $student->card->number ?? 'None',
+                'room' => $student->card->room->name ?? 'None'
             ]);
         }
 
