@@ -62,9 +62,11 @@ class StudentController extends Controller
         return response() -> json([
             'status' => true,
             'message' => 'Student profile',
-            'profile' => $student->makeHidden(['section','grade']),
+            'profile' => $student->makeHidden(['section','grade','card']),
             'section' => $student->section,
-            'grade' => $student->grade
+            'grade' => $student->grade,
+            'card_number' => $student->card->number ?? 'None',
+            'room' => $student->card->room->name ?? 'None'
         ]);
     }
 
@@ -78,9 +80,15 @@ class StudentController extends Controller
 
             $today = $student->attendance->where('date', date('Y-m-d', strtotime(now())))->first();
 
+            $card = $student->card->number ?? 'None';
+
+            $room = $student->card->room->name ?? 'None';
+
             return $student
                 ->setAttribute('absence', $absence)
-                ->setAttribute('today_attendance', $today ? (bool)$today->attended : false);
+                ->setAttribute('today_attendance', $today ? (bool)$today->attended : false)
+                ->setAttribute('card_number', $card)
+                ->setAttribute('room', $room);
         } );
 
         $checked = $students->first()->attendance->where('date', date('Y-m-d', strtotime(now())));
@@ -88,7 +96,7 @@ class StudentController extends Controller
         return response()->json([
             'message'=>'success',
             'checked' => !$checked->isEmpty(),
-            'data'=> $students->makeHidden(['attendance'])
+            'data'=> $students->makeHidden(['attendance','card'])
         ]);
     }
 

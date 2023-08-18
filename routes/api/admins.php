@@ -89,6 +89,7 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
         Route::post('rooms', [RoomController::class, 'store']);
         Route::post('rooms/{room}', [RoomController::class, 'update']);
         Route::delete('rooms/{room}', [RoomController::class, 'destroy']);
+        Route::get('cards-generate', [RoomController::class, 'generate']);
         Route::get('sections/{section}/schedule', [SectionScheduleController::class, 'scheduleBysection']);
 
         Route::post('sections/teachers', [SectionTeacherController::class, 'store']);

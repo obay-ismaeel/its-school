@@ -22,6 +22,7 @@ use App\Models\GuardianStudent;
 use App\Models\Mark;
 use App\Models\Post;
 use App\Models\Report;
+use App\Models\Room;
 use App\Models\SectionSchedule;
 use App\Models\SectionTeacher;
 use App\Models\StudentAttendance;
@@ -261,6 +262,8 @@ class DatabaseSeeder extends Seeder
 
             // Alerts
             Alerts::factory(20)->create();
+
+            Room::factory(10)->create();
 
     }
 }

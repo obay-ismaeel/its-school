@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -88,6 +89,10 @@ class Student extends Authenticatable
     public function assignments()
     {
         return $this->belongsToMany(Assignment::class, 'assignment_students');
+    }
+
+    public function card() {
+        return $this->hasOne(ExamCard::class, 'student_id');
     }
 
 }
