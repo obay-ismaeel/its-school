@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Course;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class TeacherFactory extends Factory
         $username = fake()->unique()->userName();
 
         return [
-            'course_id' => fake()->numberBetween(1, 6),
+            'course_id' => Course::inRandomOrder()->first()->id,
             'is_principle' => fake()->boolean(),
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),

@@ -58,6 +58,12 @@ class SectionScheduleController extends Controller
         $days = ['sunday','monday','tuesday','wednesday','thursday'];
         for($i = 1 ; $i <= Section::count() ; $i++)
         {
+            if(Section::find($i)->grade->gradeCourses()->sum('number_of_weekly_classes') != 30){
+                return response()->json([
+                    'status' => false,
+                    'message' => "wrong in " . Section::find($i)->grade->name . ": sum of courses classes must be 30"
+                ]);
+            }
             for($j = 0 ; $j < 5 ; $j++)
             {
                 for($k = 1 ; $k < 7 ; $k++)

@@ -19,7 +19,7 @@ class AssignmentStudentFactory extends Factory
     {
         return [
             //'student_id' => 2,
-            //'assignment_id' => Assignment::factory()->create()->id,
+            'assignment_id' => Assignment::inRandomOrder()->first()->id,
             'is_done' => fake()->boolean()
         ];
     }

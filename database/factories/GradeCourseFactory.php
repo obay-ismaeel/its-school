@@ -20,7 +20,7 @@ class GradeCourseFactory extends Factory
             'course_id' => fake()->numberBetween(1, 6),
             'grade_id' => fake()->numberBetween(1, 3),
             'description' => fake()->text(),
-            'number_of_weekly_classes' => 5,//!
+            'number_of_weekly_classes' => 3,//!
             'top_mark' => fake()->randomElement([200, 400, 600]),
             'lower_mark' => fake()->randomElement([80, 120])
         ];

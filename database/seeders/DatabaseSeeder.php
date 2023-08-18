@@ -50,10 +50,49 @@ class DatabaseSeeder extends Seeder
         // ]);
 
             // Courses
-            Course::factory(6)->create();
+            Course::factory()->create([
+                'name' => 'arabic',
+                'image_path' => 'courses/arabic.png'
+            ]);
+            Course::factory()->create([
+                'name' => 'english',
+                'image_path' => 'courses/english.png'
+            ]);
+            Course::factory()->create([
+                'name' => 'maths',
+                'image_path' => 'courses/maths.png'
+            ]);
+            Course::factory()->create([
+                'name' => 'science',
+                'image_path' => 'courses/science.png'
+            ]);
+            Course::factory()->create([
+                'name' => 'geography',
+                'image_path' => 'courses/geography.png'
+            ]);
+            Course::factory()->create([
+                'name' => 'french',
+                'image_path' => 'courses/french.png'
+            ]);
+            Course::factory()->create([
+                'name' => 'history',
+                'image_path' => 'courses/history.png'
+            ]);
+            Course::factory()->create([
+                'name' => 'chemistry',
+                'image_path' => 'courses/chemistry.png'
+            ]);
+            Course::factory()->create([
+                'name' => 'philosophy',
+                'image_path' => 'courses/philosophy.png'
+            ]);
+            Course::factory()->create([
+                'name' => 'religion',
+                'image_path' => 'courses/religion.png'
+            ]);
 
             // Grades
-            for($i = 9 ; $i < 12 ; $i++)
+            for($i = 6 ; $i < 12 ; $i++)
             {
                 if($i > 9)
                 {
@@ -75,7 +114,7 @@ class DatabaseSeeder extends Seeder
             // Sections
             for($i = 1 ; $i <= Grade::count() ; $i++)
             {
-                for($j = 1 ; $j < 3 ; $j++)
+                for($j = 1 ; $j <= 3 ; $j++)
                 {
                     Section::factory()->create([
                         'grade_id' => $i,
@@ -110,9 +149,40 @@ class DatabaseSeeder extends Seeder
             for($i = 1 ; $i <= Course::count() ; $i++)
             {
                 Teacher::factory()->create([
-                    'course_id' => $i
+                    'course_id' => $i,
+                    'is_principle' => false
                 ]);
             }
+            Teacher::factory(5)->create([
+                'course_id' => null,
+                'is_principle' => true
+            ]);
+
+            Teacher::factory()->create([
+                'is_principle' => false,
+                'username' => 'obayism',
+                'password' => '456789',
+                'first_name' => 'obay',
+                'last_name' => 'ismail',
+                'date_of_birth' => fake()->date(),
+                'address' => fake()->address(),
+                'phone_number' => '0934558769',
+                'bio' => fake()->text(),
+                'gender' => 'male',
+            ]);
+
+            Teacher::factory()->create([
+                'is_principle' => true,
+                'username' => 'majdham',
+                'password' => '123456',
+                'first_name' => 'majd',
+                'last_name' => 'hammad',
+                'date_of_birth' => fake()->date(),
+                'address' => fake()->address(),
+                'phone_number' => '0934558769',
+                'bio' => fake()->text(),
+                'gender' => 'male',
+            ]);
 
             // Section Teacher
             for($i = 1 ; $i <= Section::count() ; $i++)
@@ -153,19 +223,7 @@ class DatabaseSeeder extends Seeder
                     'type' => fake()->randomElement(['scientific','literary','basic']),
                 ]);
 
-                Teacher::factory()->create([
-                    'is_principle' => 0,
-                    'username' => 'obayism',
-                    'password' => '456789',
-                    'first_name' => 'obay',
-                    'last_name' => 'ismail',
-                    'date_of_birth' => fake()->date(),
-                    'address' => fake()->address(),
-                    'phone_number' => '0934558769',
-                    'bio' => fake()->text(),
-                    'gender' => fake()->randomElement(['male', 'female']),
 
-                ]);
 
                 Guardian::factory()->create([
                     'username' => 'obayism',
@@ -180,12 +238,27 @@ class DatabaseSeeder extends Seeder
 
             // Assignments
             Assignment::factory(20)->create();
+            for($i = 13 ; $i <= 18 ; $i++){
+                Assignment::factory(3)->create([
+                    'section_id' => 5,
+                    'grade_course_id' => $i
+                ]);
+                Assignment::factory(3)->create([
+                    'section_id' => 6,
+                    'grade_course_id' => $i
+                ]);
+            }
 
             // AssignmentStudent
+            AssignmentStudent::factory(10)->create([
+                'student_id' => 91,
+                'is_done' => false
+            ]);
+
             for($i = 1 ; $i <= Section::count() ; $i++)
             {
-            $assignments = Assignment::where('section_id', $i)->get();
-            $students = Student::where('section_id', $i)->get();
+                $assignments = Assignment::where('section_id', $i)->get();
+                $students = Student::where('section_id', $i)->get();
                 foreach($students as $student)
                 {
                     foreach($assignments as $assignment)
@@ -269,6 +342,12 @@ class DatabaseSeeder extends Seeder
 
             // Alerts
             Alerts::factory(20)->create();
+            Alerts::factory(10)->create([
+                'student_id' => 90
+            ]);
+            Alerts::factory(10)->create([
+                'student_id' => 91
+            ]);
 
             Room::factory(10)->create();
 
