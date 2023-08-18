@@ -10,7 +10,6 @@ use App\Models\Post;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -24,11 +23,8 @@ class PostController extends Controller
 
         $gradeId = Student::find($request->student_id ? $request->student_id : Auth::id())->section->grade->id;
 
-        //I changed it for testing
         $posts = Post::where('grade_id', $gradeId)
         ->with(['teacher.course:id,name', 'attachments'])->latest()->get();
-
-        // $posts = $posts->where('grade_id', $gradeId);
 
         return response()->json([
             'status' => true,
