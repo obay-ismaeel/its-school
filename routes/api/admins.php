@@ -14,6 +14,9 @@ use App\Http\Controllers\Api\GuardianController;
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\SectionScheduleController;
 use App\Http\Controllers\Api\SectionTeacherController;
+use App\Http\Controllers\Api\LineController;
+use App\Http\Controllers\Api\StudentTripController;
+use App\Http\Controllers\Api\TripController;
 use App\Models\GradeCourse;
 use App\Models\SectionSchedule;
 use Illuminate\Http\Request;
@@ -38,7 +41,7 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
 
         Route::get('courses', [CourseController::class, 'webIndex']);
         Route::post('courses', [CourseController::class, 'store']);
-        Route::put('courses/{course}', [CourseController::class, 'update']);
+        Route::post('courses/{course}', [CourseController::class, 'update']);
         Route::delete('courses/{course}', [CourseController::class, 'destroy']);
 
         Route::get('grades', [GradeController::class, 'index']);
@@ -101,6 +104,15 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])
 
         Route::post('alerts', [AlertController::class, 'store']);
 
+        Route::get('lines', [LineController::class, 'index']);
+        Route::post('lines', [LineController::class, 'store']);
+        Route::delete('lines/{line}', [LineController::class, 'destroy']);
+
+        Route::post('trips', [TripController::class, 'store']);
+        Route::delete('trips/{trip}', [TripController::class, 'destroy']);
+
+        Route::post('student/trip', [StudentTripController::class, 'store']);
+        Route::delete('student/trip', [StudentTripController::class, 'destroy']);
 
     });
 

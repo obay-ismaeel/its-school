@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Student;
 use App\Traits\UserNameTrait;
 use App\Models\StudentAttendance;
+use App\Models\StudentTrip;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -63,11 +64,12 @@ class StudentController extends Controller
         return response() -> json([
             'status' => true,
             'message' => 'Student profile',
-            'profile' => $student->makeHidden(['section','grade','card']),
+            'profile' => $student->makeHidden(['section','grade','card','studentTrip']),
             'section' => $student->section,
             'grade' => $student->grade,
             'card_number' => $student->card->number ?? 'None',
-            'room' => $student->card->room->name ?? 'None'
+            'room' => $student->card->room->name ?? 'None',
+            'trip' => $student->studentTrip->trip->name ?? 'None'
         ]);
     }
 
@@ -203,6 +205,9 @@ class StudentController extends Controller
                                             ->where('year', now()->year)
                                             ->with(['gradeCourse:id,course_id', 'gradeCourse.course:id,name'])
                                             ->get(['id', 'grade_course_id', 'second_term_score']),
+
+            'trip' => $student->studentTrip->trip->name ?? 'None',
+
             'card_number' => $student->card->number ?? 'None',
             'room' => $student->card->room->name ?? 'None'
 
@@ -261,7 +266,8 @@ class StudentController extends Controller
                 'message' => 'show student',
                 'student' => $student = Student::with(['grade', 'section'])->find($student->id),
                 'card_number' => $student->card->number ?? 'None',
-                'room' => $student->card->room->name ?? 'None'
+                'room' => $student->card->room->name ?? 'None',
+                'trip' => $student->studentTrip->trip->name ?? 'None'
             ]);
         }
 

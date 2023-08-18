@@ -43,7 +43,7 @@ class CourseController extends Controller
                             ->section->grade->id;
 
         $teacher = Student::find($request->student_id ? $request->student_id : Auth::id())
-                            ->section->teachers()->where('course_id', $request->course_id)->first(['teachers.id', 'first_name', 'last_name']);
+                            ->section->teachers()->where('course_id', $request->course_id)->first(['teachers.id', 'first_name', 'last_name', 'image_url']);
 
         $information = GradeCourse::with('course:id,name,image_path')
                                     ->where('course_id', $request->course_id)
@@ -89,9 +89,17 @@ class CourseController extends Controller
 
     public function update(Request $request, Course $course)
     {
+        if($request->hasFile('image_path'))
+        {
+            $path = $request->file('image_path')->store('courses');
+            $course->update([
+                'image_path' => $path
+            ]);
+        }
+
         $course->update([
             'name' => $request->name ? $request->name : $course->name,
-            'description' => $request->description ? $request->description : $course->description
+            'description' => $request->description ? $request->description : $course->description,
         ]);
 
         return response()->json([
