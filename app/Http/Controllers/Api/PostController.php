@@ -55,12 +55,14 @@ class PostController extends Controller
             'type' => $request['type']
         ]);
 
-        foreach($request['files'] as $file){
-            Attachment::create([
-                'post_id' => $post->id,
-                'file_url' => '/storage/' . $file->store('posts'),
-                'type' => 'image'
-            ]);
+        if($request['files']){
+            foreach($request['files'] as $file){
+                Attachment::create([
+                    'post_id' => $post->id,
+                    'file_url' => '/storage/' . $file->store('posts'),
+                    'type' => 'image'
+                ]);
+            }
         }
 
         return response()->json([
