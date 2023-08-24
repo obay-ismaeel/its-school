@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\FcmToken;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Teacher;
 use App\Models\TeacherAttendance;
 use App\Traits\UserNameTrait;
+use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
 {
@@ -20,6 +22,7 @@ class TeacherController extends Controller
         $request -> validate([
             'username' => 'required',
             'password' => 'required',
+            'fcm_token' => 'required'
         ]);
 
         $teacher = Teacher::firstwhere('username', $request -> username);
@@ -31,6 +34,12 @@ class TeacherController extends Controller
                 'message' => 'login failed'
             ], 401);
         }
+
+        FcmToken::create([
+            'user_id'=>$teacher->id,
+            'type'=>'teacher',
+            'token' =>$request->fcm_token
+        ]);
 
         return response() -> json([
             'status' => true,

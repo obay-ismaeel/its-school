@@ -68,11 +68,11 @@ class GradeController extends Controller
     public function teacherIndex(Section $section){
         $teacher = Teacher::find(Auth::user()->id);
 
-        $courses = $teacher->is_principle ? $section->grade->courses->sortBy('name') : $teacher->course;
+        $courses = $teacher->is_principle ? $section->grade->courses->sortBy('name')->values() : [$teacher->course];
 
         return response()->json([
             'message' => 'success',
-            'data' => [$courses]
+            'data' => $courses
         ]);
     }
 

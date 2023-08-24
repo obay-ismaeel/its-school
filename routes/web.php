@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\FcmToken;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,7 @@ Route::get('/fcm', function(){
 
     $SERVER_API_KEY = env('FIREBASE_SERVER_API_KEY');
 
-    $token_1 = 'Test Token';
+    $token_1 = FcmToken::first()->token;
 
     $data = [
 

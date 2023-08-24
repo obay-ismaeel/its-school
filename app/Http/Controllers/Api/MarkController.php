@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\GoNotification;
+use App\Events\NewMark;
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
 use App\Models\GradeCourse;
@@ -66,7 +68,7 @@ class MarkController extends Controller
             'status' => true,
             'message' => 'Totals for a student',
             'totals' => Student::find($request->student_id ? $request->student_id : Auth::id())
-                                ->totals()->with(['gradeCourse:id,course_id', 'gradeCourse.course:id,name'])
+                                ->totals()->with(['gradeCourse:id,course_id', 'gradeCourse.course:id,name,image_path'])
                                 ->where('year', $request->year)
                                 ->get()
         ]);

@@ -114,7 +114,7 @@ class DatabaseSeeder extends Seeder
             // Sections
             for($i = 1 ; $i <= Grade::count() ; $i++)
             {
-                for($j = 1 ; $j <= 3 ; $j++)
+                for($j = 1 ; $j < 3 ; $j++)
                 {
                     Section::factory()->create([
                         'grade_id' => $i,
@@ -139,7 +139,7 @@ class DatabaseSeeder extends Seeder
             // Students
                 for($j = 1 ; $j <= Section::count() ; $j++)
                 {
-                    Student::factory(15)->create([
+                    Student::factory(10)->create([
                         'section_id' => $j,
                         'grade_id' => Section::find($j)->grade->id
                     ]);
@@ -251,7 +251,7 @@ class DatabaseSeeder extends Seeder
 
             // AssignmentStudent
             AssignmentStudent::factory(10)->create([
-                'student_id' => 91,
+                'student_id' => 121,
                 'is_done' => false
             ]);
 
@@ -276,14 +276,65 @@ class DatabaseSeeder extends Seeder
             Attachment::factory(30)->create();
 
             // Marks
-            for($i = 13 ; $i < 19 ; $i++)
+            for($i = 21 ; $i <= 30 ; $i++)
             {
                 Mark::factory()->create([
-                    'student_id' => 91,
+                    'student_id' => 121,
                     'grade_course_id' => $i,
+                    'type' => 'practical',
+                    'term' => 'first'
                 ]);
             }
 
+            for($i = 21 ; $i <= 30 ; $i++)
+            {
+                Mark::factory()->create([
+                    'student_id' => 121,
+                    'grade_course_id' => $i,
+                    'type' => 'exam',
+                    'term' => 'first'
+                ]);
+            }
+
+            for($i = 21 ; $i <= 30 ; $i++)
+            {
+                Mark::factory()->create([
+                    'student_id' => 121,
+                    'grade_course_id' => $i,
+                    'type' => 'test',
+                    'term' => 'first'
+                ]);
+            }
+
+            for($i = 21 ; $i <= 30 ; $i++)
+            {
+                Mark::factory()->create([
+                    'student_id' => 121,
+                    'grade_course_id' => $i,
+                    'type' => 'practical',
+                    'term' => 'second'
+                ]);
+            }
+
+            for($i = 21 ; $i <= 30 ; $i++)
+            {
+                Mark::factory()->create([
+                    'student_id' => 121,
+                    'grade_course_id' => $i,
+                    'type' => 'exam',
+                    'term' => 'second'
+                ]);
+            }
+
+            for($i = 21 ; $i <= 30 ; $i++)
+            {
+                Mark::factory()->create([
+                    'student_id' => 121,
+                    'grade_course_id' => $i,
+                    'type' => 'test',
+                    'term' => 'second'
+                ]);
+            }
             // Schedule
             $days = ['sunday','monday','tuesday','wednesday','thursday'];
             for($i = 1 ; $i <= Section::count() ; $i++)
@@ -303,10 +354,10 @@ class DatabaseSeeder extends Seeder
 
             // Totals
             Total::factory(50)->create();
-            for($i = 13 ; $i < 19 ; $i++)
+            for($i = 21 ; $i <= 30 ; $i++)
             {
                 Total::factory()->create([
-                    'student_id' => 91,
+                    'student_id' => 121,
                     'grade_course_id' => $i,
                 ]);
             }
@@ -346,7 +397,7 @@ class DatabaseSeeder extends Seeder
                 'student_id' => 90
             ]);
             Alerts::factory(10)->create([
-                'student_id' => 91
+                'student_id' => 121
             ]);
 
             Room::factory(10)->create();

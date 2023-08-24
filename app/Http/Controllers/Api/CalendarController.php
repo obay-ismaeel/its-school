@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\GoNotification;
 use App\Http\Controllers\Controller;
 use App\Models\CalendarItem;
+use App\Models\FcmToken;
 use Illuminate\Http\Request;
 
 class CalendarController extends Controller
@@ -28,6 +30,13 @@ class CalendarController extends Controller
         ]);
 
         $calendarItem = CalendarItem::create($attributes);
+
+        GoNotification::dispatch(
+            $attributes['title'],
+            $attributes['content'],
+            FcmToken::all()->pluck('token')->all()
+        );
+
 
         return response()->json([
             'status' => true,
